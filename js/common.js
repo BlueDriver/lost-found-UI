@@ -22,11 +22,14 @@ $.ajaxSetup({
     complete: function () {
         hideLoading();
     }
-})
+});
 
-//将对象的value置为空串
-function cleanObj(obj) {
+//将对象的value置为空串，key为忽略项
+function cleanObj(obj, key) {
     for (let k in obj) {
+        if(key && key === k){
+            continue;
+        }
         obj[k] = "";
     }
 }

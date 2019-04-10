@@ -10,13 +10,27 @@
     <title>creative multi forms a Flat Responsive Widget Template :: w3layouts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <!--<script type="application/x-java script"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);-->
-    <!--function hideURLbar(){ window.scrollTo(0,1); }-->
-
-    <!--</script>-->
     <link href="./css/style.css" rel="stylesheet" type="text/css" media="all"/><!--stylesheet-css-->
     <script src="./js/vue.js"></script>
     <script src="./js/jquery.js"></script>
+    <style>
+        .tabContainer {
+            display: flex;
+            margin-bottom: 1em;
+        }
+
+        .tab {
+            font-size: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+            flex: 1;
+            cursor: pointer;
+        }
+        .tabActive {
+            color: #fff;
+            border-bottom: 1px solid #fff;
+        }
+    </style>
 </head>
 <body>
 <!-- <h1>creative <span>m</span><span>u</span><span>l</span><span>t</span><span>i</span> forms</h1> -->
@@ -28,23 +42,31 @@
             <div class="agile">
                 <div class="w3l-signup5" style="">
                     <form action="#" method="post">
-                        <h3 style="color: #fff;">完善信息</h3>
+                        <div class="tabContainer">
+                            <div title="aaa" class="tab" :class="{tabActive: tabIndex == 0}" @click="changeTab(0)">
+                                用户登录
+                            </div>
+                            <div class="tab" :class="{tabActive: tabIndex == 1}" @click="changeTab(1)">身份认证</div>
+                            <!--<div class="tab" :class="{tabActive: tabIndex == 2}" @click="changeTab(2)">账号注册</div>-->
+                        </div>
+                        <!--<h3 style="color: #fff;">完善信息</h3>-->
                         <div class="opt">
                             <!--<label>选择你的学校：</label>-->
                             <select @change="changeSelect($event)"
                                     style="border: none; width: 100%; background-color: #fff; color: #000; margin-bottom: 1em; font-size: 15px; padding: 10px 4px;">
 
                                 <option value="">选择你的学校</option>
-                                <option v-if="schools.length == 0" disabled value="">暂无数据</option>
+                                <option v-show="schools == undefined || schools.length == 0" disabled>暂无数据{{schools}}
+                                </option>
 
                                 <option v-for="item in schools" :key="item" :value="item.schoolId">
                                     {{item.schoolName}}
                                 </option>
                             </select>
                         </div>
-                        <input v-model="user.username" type="text" placeholder="学号" required=""/>
+                        <input v-model="user.username" type="text" :placeholder="tabIndex==1?'学号':'用户名'" required=""/>
                         <input v-model="user.password" type="password" placeholder="密码" required=""/>
-                        <input v-model="user.email" type="email" placeholder="邮箱" required=""/>
+                        <input v-model="user.email" v-if="tabIndex!=0" type="email" placeholder="邮箱" required=""/>
                         <div class="opt">
                             <input id="vcode" style="width: 65%; display: inline-block; float: left;" type="text"
                                    v-model="user.code"
@@ -72,11 +94,10 @@
 <script src="js/common.js"></script>
 <script>
 
-    let schools = [];
-
     var app = new Vue({
         el: "#app",
         data: {
+            tabIndex: 0,
             src: baseUrl + "common/verifyCode?t=",
             now: new Date().getTime(),
             user: {
@@ -86,9 +107,13 @@
                 email: "",
                 code: ""
             },
-            schools: schools
+            schools: []
         },
         methods: {
+            changeTab: function (index) {
+                console.log(index);
+                this.tabIndex = index;
+            },
             submit: function () {
                 if (this.user.schoolId == "") {
                     showAlert("请选择学校！")
@@ -96,25 +121,26 @@
                 }
                 let me = this;
                 $.ajax({
-                    url: baseUrl + "/user/recognize",
+                    url: baseUrl + (me.tabIndex == 0 ? "/user/login" : "/user/recognize"),
                     method: "POST",
                     data: JSON.stringify(this.user),
                     success: function (res, status) {
                         if (status == "success") {
                             if (res.success) {
-                                if(!res.data.user){//no user
+                                if (!res.data.user) {//no user
                                     showAlertError("你的账号未进行邮箱验证，现已向其发送验证邮件，验证后即可使用，请注意查收！")
-                                }else{
+                                } else {
                                     showOK("登录成功！")
                                     saveSession("user", res.data.user);
                                 }
                                 //clean data
-                                cleanObj(me.user);
+                                me.user.password = "";
+                                me.user.code = "";
                             } else {
                                 showAlertError(res.msg);
-                                me.newCode();
                                 me.user.code = "";
                             }
+                            me.newCode();
                         } else {
                             console.log(res);
                             alert(res)
