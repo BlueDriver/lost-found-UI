@@ -1,0 +1,163 @@
+<!--
+	Author: W3layouts
+	Author URL: http://w3layouts.com
+	License: Creative Commons Attribution 3.0 Unported
+	License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>creative multi forms a Flat Responsive Widget Template :: w3layouts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!--<script type="application/x-java script"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);-->
+    <!--function hideURLbar(){ window.scrollTo(0,1); }-->
+
+    <!--</script>-->
+    <link href="./css/style.css" rel="stylesheet" type="text/css" media="all"/><!--stylesheet-css-->
+    <script src="./js/vue.js"></script>
+    <script src="./js/jquery.js"></script>
+</head>
+<body>
+<!-- <h1>creative <span>m</span><span>u</span><span>l</span><span>t</span><span>i</span> forms</h1> -->
+<h1>统一身份认证</h1>
+
+<div class="w3l-form" id="app">
+    <div class="w3l-grids-from2">
+        <div class="w3l-user2">
+            <div class="agile">
+                <div class="w3l-signup5" style="">
+                    <form action="#" method="post">
+                        <h3 style="color: #fff;">完善信息</h3>
+                        <div class="opt">
+                            <!--<label>选择你的学校：</label>-->
+                            <select @change="changeSelect($event)"
+                                    style="border: none; width: 100%; background-color: #fff; color: #000; margin-bottom: 1em; font-size: 15px; padding: 10px 4px;">
+
+                                <option value="">选择你的学校</option>
+                                <option v-if="schools.length == 0" disabled value="">暂无数据</option>
+
+                                <option v-for="item in schools" :key="item" :value="item.schoolId">
+                                    {{item.schoolName}}
+                                </option>
+                            </select>
+                        </div>
+                        <input v-model="user.username" type="text" placeholder="学号" required=""/>
+                        <input v-model="user.password" type="password" placeholder="密码" required=""/>
+                        <input v-model="user.email" type="email" placeholder="邮箱" required=""/>
+                        <div class="opt">
+                            <input id="vcode" style="width: 65%; display: inline-block; float: left;" type="text"
+                                   v-model="user.code"
+                                   placeholder="验证码" required="" maxlength="5"/>
+                            <img alt="验证码" id="codeImg" @click="newCode" :src="src + now"
+                                 style="float: right;  border-radius: 0px; display: inline-block; height: 40px;border: none;">
+                        </div>
+                        <input @click="submit" type="button" class="btn" name="button" value="确定"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <footer>
+        &copy; 2019 校园失物招领网站系统 | <a href="http://www.ecit.edu.cn/" target="_blank">ECUT</a>
+        <!--&copy; 2019 校园失物招领网站系统 | <a href="a.html" target="_blank">ECUT</a>-->
+        <!--&copy; 2019 校园失物招领网站系统 | <a href="a.html" target="_self">ECUT</a>-->
+    </footer>
+</div>
+<!--<script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script>-->
+<!--<link href="https://cdn.bootcss.com/toastr.js/latest/toastr.min.css" rel="stylesheet">-->
+
+<script src="./js/layer.js"></script>
+<script src="js/common.js"></script>
+<script>
+
+    let schools = [];
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            src: baseUrl + "common/verifyCode?t=",
+            now: new Date().getTime(),
+            user: {
+                schoolId: "",
+                username: "",
+                password: "",
+                email: "",
+                code: ""
+            },
+            schools: schools
+        },
+        methods: {
+            submit: function () {
+                if (this.user.schoolId == "") {
+                    showAlert("请选择学校！")
+                    return;
+                }
+                let me = this;
+                $.ajax({
+                    url: baseUrl + "/user/recognize",
+                    method: "POST",
+                    data: JSON.stringify(this.user),
+                    success: function (res, status) {
+                        if (status == "success") {
+                            if (res.success) {
+                                if(!res.data.user){//no user
+                                    showAlertError("你的账号未进行邮箱验证，现已向其发送验证邮件，验证后即可使用，请注意查收！")
+                                }else{
+                                    showOK("登录成功！")
+                                    saveSession("user", res.data.user);
+                                }
+                                //clean data
+                                cleanObj(me.user);
+                            } else {
+                                showAlertError(res.msg);
+                                me.newCode();
+                                me.user.code = "";
+                            }
+                        } else {
+                            console.log(res);
+                            alert(res)
+                        }
+                    },
+                });
+            },
+            changeSelect(event) {
+                this.user.schoolId = event.target.value
+            },
+            newCode() {
+                this.now = new Date().getTime();
+            }
+        }
+    });
+    $(function () {
+        //验证码高度设置
+        $("#codeImg").css("height", $("#vcode").outerHeight() + 'px');
+        $(window).resize(function () {
+            $("#codeImg").css("height", $("#vcode").outerHeight() + 'px');
+        });
+        app.schools = get(baseUrl + "/common/schools");
+    });
+
+    function get(url, data) {
+        $.ajax({
+            url: url,
+            method: "GET",
+            data: data || "",
+            success: function (res, status) {
+                if (status == "success") {
+                    if (res.success) {
+                        app.schools = res.data.schools
+                    } else {
+                        showAlertError(res.msg)
+                    }
+                } else {
+                    console.log(res);
+                    alert(res)
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>
