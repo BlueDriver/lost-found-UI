@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Language" content="zh-CN">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="referrer" content="always"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <title>系统主页</title>
+    <link rel="stylesheet" type="text/css" href="./css/semantic.min.css"/>
+    <link type="text/css" rel="stylesheet" href="./css/space.4cb6e48f.css">
+    <script src="./js/jquery.js"></script>
+    <script src="./js/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+
+<div class="pusher" id="app">
+    <div id="mainScreen">
+        <div class="ui container">
+            <div class="ui grid space-home">
+                <div class="row">
+                    <div class="five wide computer five wide tablet sixteen wide mobile column">
+                        <!--用户信息-->
+                        <div class="space-sidebar">
+                            <div class="ui basic center aligned segment sidebar-section user-info">
+                                <div class="avatar-wrap">
+                                    <a class="ui small circular image avatar" href="https://my.oschina.net/MStart">
+                                        <div class="osc-avatar large-portrait _120x120" title="Mstart"
+                                             data-user-id="2369789">
+                                            <img :src="user.icon"
+                                                 :alt="user.realName" :title="user.realName"/>
+                                        </div>
+                                    </a>
+                                    <div class="gender ui large teal circular label">
+                                        <i class=" icon" :class="{venus: user.gender==0, mars:user.gender != 0}"></i>
+                                    </div>
+                                </div>
+                                <div class="ui header">
+                                    <h3>{{user.realName}}</h3>
+                                    <div class="sub header user-signature">{{user.schoolName}}</div>
+                                </div>
+
+                            </div>
+
+                            <div class="item action clearfix">
+                                <a class="ui orange button follow-btn" data-user-id="3417180"
+                                   data-follow-status="1"></i><span class="text">退出</span></a>
+                                <div class="ui basic dropdown more dropdown-more" tabindex="0">
+                                    <div @click="showMenu=!showMenu" class="ui icon orange basic button menu-btn"><i
+                                            class="bars icon"></i></div>
+                                    <div class="menu transition " tabindex="-1"
+                                         :style="{display: showMenu?'block':'none'}">
+                                        <a class="item" href="https://www.oschina.net/question/ask?user=3417180"
+                                           target="_blank"><i class="lock  icon"></i>重置密码</a>
+                                        <a class="item" user-block="" data-id="3417180" data-status="0"><i
+                                                class="envelope icon"></i><span class="text">反馈</span></a>
+                                        <a class="item ban" ban-report="" data-id="3417180" data-obj-type="32"
+                                           data-url="https://my.oschina.net/TimeCarving">
+                                            <i class="flag  icon"></i>举报
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="ui basic segment sidebar-section">
+                                <h3 class="header">个人信息</h3>
+                                <div class="ui list">
+                                    <div class="item">学生号码：{{user.studentNum}}</div>
+                                    <div class="item">邮箱地址：{{user.email}}</div>
+                                    <!--<div class="item">手机号码：</div>-->
+                                    <div class="item">加入时间：{{user.createTime}}</div>
+                                    <div class="item">最近登录：{{user.lastLogin}}</div>
+                                </div>
+                            </div>
+                            <!--通知-->
+                            <div class="ui basic segment software-works sidebar-section">
+                                <h3 class="header">通知消息</h3>
+                                <div class="ui divided items">
+                                    <div class="item ">
+                                        <img class="ui avatar image" src="https://static.oschina.net/img/logo/dlog4j.png" alt="DLOG4J" title="DLOG4J">
+                                        <div class="content">
+                                            <a href="https://www.oschina.net/p/dlog4j" target="_blank" class="ui small header ">禁止打广告禁止打广告禁止打广告禁止打广告禁止打广告禁止打广告禁止打广告</a>
+                                            <div class="extra">Java多用户博客系统</div>
+                                        </div>
+                                        <!--<div class="ui basic label software-collect-btn" style="border:0" data-id="157" data-obj-type="1" data-user-id="12" data-favorited="$isFavorited">-->
+                                            <!--<span class="number">376</span>-->
+                                            <!--<i class="star icon  grey outline "></i>-->
+                                        <!--</div>-->
+                                    </div>
+
+                                    <div class="item default-hide">
+                                        <img class="ui avatar image" src="/new-osc/img/default-software-logo.png" alt="Py3Cache" title="Py3Cache">
+                                        <div class="content">
+                                            <a href="https://www.oschina.net/p/py3cache" target="_blank" class="ui small header ">Py3Cache</a>
+                                            <div class="extra">Python 两级缓存框架</div>
+                                        </div>
+                                        <div class="ui basic label software-collect-btn" style="border:0" data-id="44683" data-obj-type="1" data-user-id="12" data-favorited="$isFavorited">
+                                            <span class="number">34</span>
+                                            <i class="star icon  grey outline "></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="ui fluid button mini view-all-button">显示全部 8 个软件</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="eleven wide computer eleven wide tablet sixteen wide mobile column">
+                        <div class="ui inverted dimmer space-index-container-loader">
+                            <div class="ui text loader">加载中</div>
+                        </div>
+                        <div class="space-index-container">
+
+                            <div class="hidden-scroll global-mb ">
+                                <div class="ui green pointing secondary big menu space-tab">
+                                    <input type="hidden" name="currentTab" value="newest">
+                                    <span href="#" class="item" :class="{active: tabIndex == 0}"
+                                       @click="changeTab(0)">所有</span>
+                                    <span href="#" class="item" :class="{active: tabIndex == 1}"
+                                       @click="changeTab(1)">我的</span>
+                                    <span href="#" class="item" :class="{active: tabIndex == 2}"
+                                       @click="changeTab(2)">消息<div class="floating ui red label">22</div></span>
+                                    <span href="#" class="item" :class="{active: tabIndex == 3}"
+                                       @click="changeTab(3)">发布</span>
+                                </div>
+                            </div>
+
+                            <div class="ui basic segment article-list" id="newestBlogList">
+
+
+                                <div class="ui relaxed divided items list-container space-list-container">
+
+
+                                    <div v-if="tabIndex==0" class="ui feed tweet-item item blog-item"
+                                         data-tweet-id="19932613" data-tweet-owner-id="100956" data-repost-content="">
+                                        <div class="event">
+                                            <div class="content">
+                                                <div class="ui items tweet-user-info">
+                                                    <div class="item">
+                                                        <a href="https://my.oschina.net/liwenhoho" target="_blank">
+                                                            <div class="osc-avatar small-portrait _35x35 avatar"
+                                                                 title="会编程的花栗鼠" data-user-id="100956">
+                                                                <img src="https://oscimg.oschina.net/oscnet/up-72134e946435775fc684fd49d86086b7.jpg!/both/50x50"
+                                                                     alt="会编程的花栗鼠" title="会编程的花栗鼠">
+                                                            </div>
+                                                        </a>
+                                                        <div class="content">
+                                                            <a class="user __user"
+                                                               href="https://my.oschina.net/liwenhoho" target="_blank">
+                                                                <div class="ui red label horizontal" data-tooltip="寻找">
+                                                                    寻找
+                                                                </div>
+                                                                会编程的花栗鼠</a>
+
+                                                            <div class="extra">
+                                                                <div class="date">2016/12/26 04:44&nbsp;&nbsp;<i
+                                                                        class="map marker alternate icon"></i>
+                                                                    <span data-tweet-id="19932613">图书馆的地方</span></div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="extra text" data-emoji-render="">
+                                                    我TM就知道，喵星人并不简单！喵星人并不简单！喵星人并不简单！喵星人并不简单！喵星人并不简单！
+                                                </div>
+                                                <div class="extra multi-image" data-optlog-id="19932613">
+                                                    <div class="multimgs">
+                                                        <div class="wrapper single-wrapper" data-multi-image-raw="item">
+                                                            <a href="https://my.oschina.net/liwenhoho/tweet/19932613"
+                                                               target="_blank">
+                                                                <img data-raw-img=""
+                                                                     data-big-img="https://oscimg.oschina.net/oscnet/up-65b424a96a8bccb1a5276d2e57f2ad1a.jpg!/fp/500000"
+                                                                     data-small-img="https://oscimg.oschina.net/oscnet/up-65b424a96a8bccb1a5276d2e57f2ad1a.jpg!/sq/200"
+                                                                     src="http://www.swzl.com/upload/34bcde819ee2469086296450c05f659b.jpg"
+                                                                     data-max-width="160" data-max-height="160" alt="图片"
+                                                                     style="max-width: 160px; height: auto;">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ui horizontal list">
+                                                    <div class="item">
+                                                        <a class="ui horizontal label"
+                                                           href="https://my.oschina.net/MStart?q=">安卓</a>
+                                                    </div>
+                                                    <div class="item">
+                                                        <a class="ui horizontal label"
+                                                           href="https://my.oschina.net/MStart?q=">手机</a>
+                                                    </div>
+                                                </div>
+                                                <div class="meta">
+                                                    <a class="like " data-tweet-like-btn="" data-tweet-id="19932613">
+                                                        <i class="eye    icon"></i>
+                                                        <span data-tweet-like-count="" data-tweet-id="19932613">2</span>
+                                                    </a>
+                                                    <a class="reply"
+                                                       href="https://my.oschina.net/liwenhoho/tweet/19932613#comments"
+                                                       target="_blank">
+                                                        <i class="comment outline icon"></i> <span>1</span> 评论
+                                                    </a>
+                                                    <a class="share">
+                                                        <i class="external icon"></i> <span data-tweet-ref-count=""
+                                                                                            data-tweet-id="19932613">转发</span>
+                                                    </a>
+                                                    <a class="view"
+                                                       href="https://my.oschina.net/liwenhoho/tweet/19932613"
+                                                       target="_blank">查看详情</a>
+                                                    <div class="right">
+                                                        <a class="ban" ban-report="" data-id="19932613"
+                                                           data-obj-type="100"
+                                                           data-url="https://my.oschina.net/liwenhoho/tweet/19932613">
+                                                            <i class="ban icon"></i> 举报
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <!--无内容-->
+                                    <div v-else-if="tabIndex==1" class="ui basic segment article-list"
+                                         id="popularBlogList">
+                                        <div class="ui center aligned basic segment">
+                                            <img src="./images/empty.png">
+                                            <h4 class="ui sub header grey">无内容</h4>
+                                        </div>
+                                    </div>
+                                    <!--互动-->
+                                    <div v-else-if="tabIndex==2" class="item activity-item">
+                                        <div class="ui avatar image">
+                                            <a href="https://my.oschina.net/barat">
+                                                <div class="osc-avatar small-portrait _35x35" title="巴拉迪维"
+                                                     data-user-id="2340783">
+                                                    <img src="https://oscimg.oschina.net/oscnet/up-zdibcheh15q9q0tyfwd6j90o0de2da0h!/both/50x50?t=1552403383000"
+                                                         alt="巴拉迪维" title="巴拉迪维">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <div class="description">
+                                                <a class="user __user" href="https://my.oschina.net/barat" title="巴拉迪维"
+                                                   target="_blank">巴拉迪维</a> 04/07 23:51 评论了新闻：<a
+                                                    href="https://www.oschina.net/news/105724/do-something-for-996-programmers-in-china"
+                                                    target="_blank">Python 之父再度发声：我们能为中国的“996”程序员做什么？</a>
+                                            </div>
+                                            <div class="description summary" data-emoji-render="">
+                                                @开源中国首席技术官 你不怕，是因为你没有看到我看到的那些恐怖。。。
+                                            </div>
+                                            <div class="extra referer">
+                                                <div class="referer-wrapper">
+                                                    <a class="user" href="https://my.oschina.net/hardbone" title="@局长"
+                                                       target="_blank">@局长</a>
+                                                    <div class="extra text" data-emoji-render="">
+                                                        一周前，当 996.ICU 的 GitHub repo 火速在互联网广泛传播时，Python 之父 Guido v...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="extra">
+                                                <div class="ui horizontal small list">
+                                                    <a class="item"
+                                                       href="https://www.oschina.net/news/105724/do-something-for-996-programmers-in-china#comments"
+                                                       target="_blank"><i class="comment outline icon"></i> 223 </a>
+                                                    <a class="item"
+                                                       href="https://www.oschina.net/news/105724/do-something-for-996-programmers-in-china"
+                                                       target="_blank"><i class="external link alternate icon"></i> 查看原文</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--发布-->
+                                    <div v-else class="item activity-item">
+
+                                    </div>
+
+
+                                </div>
+                                <div class="page-load-status">
+                                    <p class="infinite-scroll-request">
+                                        <i class="ui active small inline loader"></i>
+                                    </p>
+                                    <p class="infinite-scroll-last">没有更多内容</p>
+                                    <p class="infinite-scroll-error">加载失败，请刷新页面</p>
+                                </div>
+                                <a class="ui fluid button load-more-button" style="display: none">加载更多</a>
+                                <p class="pagination">
+                                    <a class="pagination__next" style="display: none"
+                                       href="https://my.oschina.net/MStart/widgets/_space_index_newest_blog?catalogId=0&q=&p=2&type=ajax">下一页</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div id="copyright">
+        <div class="ui container">
+            <div class="ui clearing basic segment" style="text-align: center;">
+                <div class="ui   horizontal link list">
+                    <div class="item">&copy; 2019 校园失物招领网站系统 | <a href="http://www.ecit.edu.cn/"
+                                                                  target="_blank">ECUT</a></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="./js/layer.js"></script>
+<script src="js/common.js"></script>
+<script src="./js/semantic.min.js"></script>
+
+<script src="./js/home.js"></script>
+
+</body>
+</html>
