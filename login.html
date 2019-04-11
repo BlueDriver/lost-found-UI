@@ -43,7 +43,7 @@
                 <div class="w3l-signup5" style="">
                     <form action="#" method="post">
                         <div class="tabContainer">
-                            <div title="aaa" class="tab" :class="{tabActive: tabIndex == 0}" @click="changeTab(0)">
+                            <div title="" class="tab" :class="{tabActive: tabIndex == 0}" @click="changeTab(0)">
                                 用户登录
                             </div>
                             <div class="tab" :class="{tabActive: tabIndex == 1}" @click="changeTab(1)">身份认证</div>
@@ -98,7 +98,7 @@
         el: "#app",
         data: {
             tabIndex: 0,
-            src: baseUrl + "common/verifyCode?t=",
+            src: baseUrl + "public/verifyCode?t=",
             now: new Date().getTime(),
             user: {
                 schoolId: "",
@@ -121,7 +121,7 @@
                 }
                 let me = this;
                 $.ajax({
-                    url: baseUrl + (me.tabIndex == 0 ? "/user/login" : "/user/recognize"),
+                    url: baseUrl + (me.tabIndex == 0 ? "/public/login" : "/public/recognize"),
                     method: "POST",
                     data: JSON.stringify(this.user),
                     success: function (res, status) {
@@ -162,7 +162,7 @@
         $(window).resize(function () {
             $("#codeImg").css("height", $("#vcode").outerHeight() + 'px');
         });
-        app.schools = get(baseUrl + "/common/schools");
+        app.schools = get(baseUrl + "/public/schools");
     });
 
     function get(url, data) {
