@@ -1,5 +1,5 @@
 //请求前缀
-const baseUrl = "http://localhost:8080//api/v1/";
+const baseUrl = "http://localhost:8080/api/v1";
 
 //全局设置ajax
 $.ajaxSetup({
