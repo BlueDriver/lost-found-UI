@@ -86,7 +86,7 @@ function saveSession(key, value) {
         sessionStorage.setItem(key, value)
     }
 }
-function getSession() {
+function getSession(key) {
     if (canUseSession()) {
         return sessionStorage.getItem(key);
     }

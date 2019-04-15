@@ -26,6 +26,7 @@
             flex: 1;
             cursor: pointer;
         }
+
         .tabActive {
             color: #fff;
             border-bottom: 1px solid #fff;
@@ -34,7 +35,7 @@
 </head>
 <body>
 <!-- <h1>creative <span>m</span><span>u</span><span>l</span><span>t</span><span>i</span> forms</h1> -->
-<h1>统一身份认证</h1>
+<h1>校园失物招领网站系统</h1>
 
 <div class="w3l-form" id="app">
     <div class="w3l-grids-from2">
@@ -71,10 +72,10 @@
                             <input id="vcode" style="width: 65%; display: inline-block; float: left;" type="text"
                                    v-model="user.code"
                                    placeholder="验证码" required="" maxlength="5"/>
-                            <img alt="验证码" id="codeImg" @click="newCode" :src="src + now"
+                            <img alt="验证码" title="点击刷新" id="codeImg" @click="newCode" :src="src + now"
                                  style="float: right;  border-radius: 0px; display: inline-block; height: 40px;border: none;">
                         </div>
-                        <input @click="submit" type="button" class="btn" name="button" value="确定"/>
+                        <input @click="submit" type="button" class="btn" value="确定"/>
                     </form>
                 </div>
             </div>
@@ -98,7 +99,7 @@
         el: "#app",
         data: {
             tabIndex: 0,
-            src: baseUrl + "public/verifyCode?t=",
+            src: baseUrl + "/public/verifyCode?t=",
             now: new Date().getTime(),
             user: {
                 schoolId: "",
@@ -130,8 +131,9 @@
                                 if (!res.data.user) {//no user
                                     showAlertError("你的账号未进行邮箱验证，现已向其发送验证邮件，验证后即可使用，请注意查收！")
                                 } else {
-                                    showOK("登录成功！")
+                                    showOK("登录成功！");
                                     saveSession("user", res.data.user);
+                                    location.replace("home.html");
                                 }
                                 //clean data
                                 me.user.password = "";
