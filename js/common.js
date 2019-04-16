@@ -1,5 +1,6 @@
 //请求前缀
 const baseUrl = "http://localhost:8080/api/v1";
+const staticUrl = "http://localhost:8080/static/";
 
 //全局设置ajax
 $.ajaxSetup({
@@ -92,7 +93,7 @@ function getSession(key) {
     }
     return null;
 }
-function deleteLocal(key) {
+function deleteSession(key) {
     sessionStorage.removeItem(key);
 }
 

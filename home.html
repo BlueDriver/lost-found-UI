@@ -29,11 +29,28 @@
         .tweet-item {
             border-bottom: 1px solid #dddddd;
         }
-        #mainScreen{
+
+        #mainScreen {
             padding-top: 10px;
         }
-        span:.item{
+
+        span:.item {
             cusor: pointer;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .article-list .image {
+                display: inline-block !important;
+            }
+        }
+
+        .text-over {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+            display: inline-block;
+            margin-top: 1.5em;
         }
     </style>
 
@@ -53,11 +70,15 @@
                         <div class="space-sidebar">
                             <div class="ui basic center aligned segment sidebar-section user-info">
                                 <div class="avatar-wrap">
-                                    <a class="ui small circular image avatar" href="https://my.oschina.net/MStart">
-                                        <div class="osc-avatar large-portrait _120x120" title="Mstart"
-                                             data-user-id="2369789">
-                                            <img :src="user.icon"
-                                                 :alt="user.realName" :title="user.realName"/>
+                                    <a class="ui small circular image avatar">
+                                        <div class="osc-avatar large-portrait _120x120">
+                                            <img v-if="user.icon" :src="user.icon" :alt="user.realName"/>
+                                            <div v-else style="height: 120px; width: 120px; font-size: 80px;
+                                                text-align: center; line-height: 80px; padding: 20px 0px;
+                                             color: #fff;background-color: #3879d9; cursor: pointer;"
+                                                 :title="user.realName">
+                                                {{user.realName[0]}}
+                                            </div>
                                         </div>
                                     </a>
                                     <div class="gender ui large teal circular label">
@@ -72,19 +93,19 @@
                             </div>
 
                             <div class="item action clearfix">
-                                <a class="ui button follow-btn green" data-user-id="3417180"
-                                   data-follow-status="1"></i><span class="text">退出</span></a>
-                                <div class="ui basic dropdown more dropdown-more" tabindex="0">
+                                <a class="ui button follow-btn green" @click="logout">
+                                    </i><span class="text">退出</span>
+                                </a>
+                                <div class="ui basic dropdown more dropdown-more">
                                     <div @click="showMenu=!showMenu" class="ui icon green basic button menu-btn"><i
                                             class="bars icon"></i></div>
                                     <div class="menu transition " tabindex="-1"
                                          :style="{display: showMenu?'block':'none'}">
-                                        <a class="item" href="https://www.oschina.net/question/ask?user=3417180"
+                                        <a class="item" href=""
                                            target="_blank"><i class="lock  icon"></i>重置密码</a>
-                                        <a class="item" user-block="" data-id="3417180" data-status="0"><i
+                                        <a class="item"><i
                                                 class="envelope icon"></i><span class="text">反馈</span></a>
-                                        <a class="item ban" ban-report="" data-id="3417180" data-obj-type="32"
-                                           data-url="https://my.oschina.net/TimeCarving">
+                                        <a class="item ban">
                                             <i class="flag  icon"></i>举报
                                         </a>
                                     </div>
@@ -108,10 +129,10 @@
                                 <div class="ui divided items">
                                     <div class="item ">
                                         <img class="ui avatar image"
-                                             src="https://static.oschina.net/img/logo/dlog4j.png" alt="DLOG4J"
+                                             src="./images/icon.jpg" alt="DLOG4J"
                                              title="DLOG4J">
                                         <div class="content">
-                                            <a href="https://www.oschina.net/p/dlog4j" target="_blank"
+                                            <a href="" target="_blank"
                                                class="ui small header ">禁止打广告禁止打广告禁止打广告禁止打广告禁止打广告禁止打广告禁止打广告</a>
                                             <div class="extra">Java多用户博客系统</div>
                                         </div>
@@ -124,7 +145,7 @@
                                     <div class="item default-hide">
                                         <img class="ui avatar image" src="" alt="Py3Cache" title="Py3Cache">
                                         <div class="content">
-                                            <a href="https://www.oschina.net/p/py3cache" target="_blank"
+                                            <a href="" target="_blank"
                                                class="ui small header ">Py3Cache</a>
                                             <div class="extra">Python 两级缓存框架</div>
                                         </div>
@@ -176,14 +197,20 @@
                                         <div class="field">
                                             <label><b>启事类型：</b></label>
                                             <div class="ui horizontal list">
-                                                <div class="item ">
-                                                    <a class="ui horizontal label green">全部</a>
+                                                <div class="item">
+                                                    <a :class="{green: tab[0].search.kind == -1}"
+                                                       @click="changeTab0Kind(-1)"
+                                                       class="ui horizontal label">全部</a>
                                                 </div>
                                                 <div class="item">
-                                                    <a class="ui horizontal label">寻物</a>
+                                                    <a :class="{green: tab[0].search.kind == 0}"
+                                                       @click="changeTab0Kind(0)"
+                                                       class="ui horizontal label">寻物</a>
                                                 </div>
                                                 <div class="item">
-                                                    <a class="ui horizontal label">招领</a>
+                                                    <a :class="{green: tab[0].search.kind == 1}"
+                                                       @click="changeTab0Kind(1)"
+                                                       class="ui horizontal label">认领</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -191,110 +218,106 @@
                                             <label><b>物品分类：</b></label>
                                             <div class="ui horizontal list">
                                                 <div class="item ">
-                                                    <a class="ui horizontal label green">全部</a>
+                                                    <a @click="changeTab0Category(-1)" class="ui horizontal label"
+                                                       :class="{green: tab[0].search.category == ''}">全部</a>
                                                 </div>
-                                                <div class="item">
-                                                    <a class="ui horizontal label">安卓</a>
+                                                <div v-for="(item, index) in category" class="item" :key="item.name">
+                                                    <a @click="changeTab0Category(index)"
+                                                       class="ui horizontal label"
+                                                       :class="{green: tab[0].search.category == item.name}">{{item.name}}</a>
                                                 </div>
-                                                <div class="item">
-                                                    <a class="ui horizontal label">安卓</a>
-                                                </div>
-
                                             </div>
                                         </div>
-                                        <div class="ui feed tweet-item item blog-item">
-                                            <div class="event">
-                                                <div class="content">
-                                                    <div class="ui items tweet-user-info">
-                                                        <div class="item">
-                                                            <a href="https://my.oschina.net/liwenhoho" target="_blank">
-                                                                <div class="osc-avatar small-portrait _35x35 avatar"
-                                                                     title="会编程的花栗鼠" data-user-id="100956">
-                                                                    <img src="https://oscimg.oschina.net/oscnet/up-72134e946435775fc684fd49d86086b7.jpg!/both/50x50"
-                                                                         alt="会编程的花栗鼠" title="会编程的花栗鼠">
-                                                                </div>
-                                                            </a>
-                                                            <div class="content">
-                                                                <a class="user __user"
-                                                                   href="https://my.oschina.net/liwenhoho"
-                                                                   target="_blank">
-                                                                    <div class="ui red label horizontal"
-                                                                         data-tooltip="寻找">
-                                                                        寻找
+                                        <block v-if="tab[0].list.length > 0">
+                                            <div v-for="item in tab[0].list" class="ui feed tweet-item item blog-item"
+                                                 :key="item.id">
+                                                <div class="event">
+                                                    <div class="content">
+                                                        <div class="ui items tweet-user-info">
+                                                            <div class="item">
+                                                                <a @click="jumpDetail(item.id)">
+                                                                    <div class="osc-avatar small-portrait _35x35 avatar"
+                                                                         :title="item.username">
+                                                                        <img :src="item.icon?item.icon:userIcon"
+                                                                             alt="头像"
+                                                                             :title="item.username">
                                                                     </div>
-                                                                    会编程的花栗鼠</a>
-
-                                                                <div class="extra">
-                                                                    <div class="date">2016/12/26 04:44&nbsp;&nbsp;<i
-                                                                            class="map marker alternate icon"></i>
-                                                                        <span data-tweet-id="19932613">图书馆的地方</span>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="extra text" data-emoji-render="">
-                                                        我TM就知道，喵星人并不简单！喵星人并不简单！喵星人并不简单！喵星人并不简单！喵星人并不简单！
-                                                    </div>
-                                                    <div class="extra multi-image" data-optlog-id="19932613">
-                                                        <div class="multimgs">
-                                                            <div class="wrapper single-wrapper"
-                                                                 data-multi-image-raw="item">
-                                                                <a href="https://my.oschina.net/liwenhoho/tweet/19932613"
-                                                                   target="_blank">
-                                                                    <img data-raw-img=""
-                                                                         data-big-img="https://oscimg.oschina.net/oscnet/up-65b424a96a8bccb1a5276d2e57f2ad1a.jpg!/fp/500000"
-                                                                         data-small-img="https://oscimg.oschina.net/oscnet/up-65b424a96a8bccb1a5276d2e57f2ad1a.jpg!/sq/200"
-                                                                         src="http://www.swzl.com/upload/34bcde819ee2469086296450c05f659b.jpg"
-                                                                         data-max-width="160" data-max-height="160"
-                                                                         alt="图片"
-                                                                         style="max-width: 160px; height: auto;">
                                                                 </a>
+                                                                <div class="content">
+                                                                    <a class="user __user" @click="jumpDetail(item.id)">
+                                                                        <div v-if="item.kind==0"
+                                                                             class="ui red label horizontal"
+                                                                             data-tooltip="正在寻找">
+                                                                            寻物
+                                                                        </div>
+                                                                        <div v-else class="ui blue label horizontal"
+                                                                             data-tooltip="等待认领">
+                                                                            认领
+                                                                        </div>
+                                                                        {{item.username}}
+                                                                    </a>
+
+                                                                    <div class="extra">
+                                                                        <div class="date">{{item.time}}&nbsp;&nbsp;
+                                                                            <i v-if="item.location"
+                                                                               class="map marker alternate icon"></i>
+                                                                            <!--<span class="text-over">{{item.location}}</span>-->
+                                                                            <span>{{item.location}}</span>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="ui horizontal list">
-                                                        <div class="item">
-                                                            <a class="ui horizontal label"
-                                                               href="https://my.oschina.net/MStart?q=">安卓</a>
+                                                        <div class="extra text">
+                                                            {{item.title}}
                                                         </div>
-                                                        <div class="item">
-                                                            <a class="ui horizontal label"
-                                                               href="https://my.oschina.net/MStart?q=">手机</a>
+                                                        <div v-if="item.images && item.images.length > 0"
+                                                             class="extra multi-image">
+                                                            <div class="multimgs">
+                                                                <div class="wrapper single-wrapper">
+                                                                    <a @click="jumpDetail(item.id)">
+                                                                        <img v-for="src in item.images"
+                                                                             :src="imgPrefix + src" :key="src"
+                                                                             style="max-width: 160px; height: auto;">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="meta">
-                                                        <a class="like " data-tweet-like-btn=""
-                                                           data-tweet-id="19932613">
-                                                            <i class="eye    icon"></i>
-                                                            <span data-tweet-like-count=""
-                                                                  data-tweet-id="19932613">2</span>
-                                                        </a>
-                                                        <a class="reply"
-                                                           href="https://my.oschina.net/liwenhoho/tweet/19932613#comments"
-                                                           target="_blank">
-                                                            <i class="comment outline icon"></i> <span>1</span> 评论
-                                                        </a>
-                                                        <a class="share">
-                                                            <i class="external icon"></i> <span data-tweet-ref-count=""
-                                                                                                data-tweet-id="19932613">转发</span>
-                                                        </a>
-                                                        <a class="view"
-                                                           href="https://my.oschina.net/liwenhoho/tweet/19932613"
-                                                           target="_blank">查看详情</a>
-                                                        <div class="right">
-                                                            <a class="ban" ban-report="" data-id="19932613"
-                                                               data-obj-type="100"
-                                                               data-url="https://my.oschina.net/liwenhoho/tweet/19932613">
-                                                                <i class="ban icon"></i> 举报
+                                                        <div class="ui horizontal list">
+                                                            <div class="item">
+                                                                <span class="ui horizontal label"
+                                                                      href="#">{{item.category}}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="meta">
+                                                            <a class="like" @click="jumpDetail(item.id)">
+                                                                <i class="eye icon"></i>
+                                                                <span data-tweet-like-count=""
+                                                                      data-tweet-id="19932613">{{item.lookCount}}</span>
                                                             </a>
+                                                            <a class="reply" @click="jumpDetail(item.id)">
+                                                                <i class="comment outline icon"></i> <span>{{item.commentCount}}</span>
+                                                            </a>
+                                                            <span class="share">
+                                                                <i class="external icon"></i> <span
+                                                                    data-tweet-ref-count=""
+                                                                    data-tweet-id="19932613">转发</span>
+                                                            </span>
+                                                            <a class="view" @click="jumpDetail(item.id)">查看详情</a>
+                                                            <!--<div class="right">-->
+                                                            <!--<a class="ban" ban-report="" data-id="19932613"-->
+                                                            <!--data-obj-type="100"-->
+                                                            <!--data-url="https://my.oschina.net/liwenhoho/tweet/19932613">-->
+                                                            <!--<i class="ban icon"></i> 举报-->
+                                                            <!--</a>-->
+                                                            <!--</div>-->
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="ui basic segment article-list">
+                                        </block>
+                                        <div v-else class="ui basic segment article-list">
                                             <div class="ui center aligned basic segment">
                                                 <img src="./images/empty.png">
                                                 <h4 class="ui sub header grey">无内容</h4>
@@ -306,20 +329,20 @@
                                         <div class="ui form">
                                             <div class="inline  fields">
                                                 <div class="eight wide field">
-                                                    <input type="text" placeholder="输入关键字">
-                                                    <button class="ui button green">GO</button>
+                                                    <input v-model="tab[1].search.keyword" type="text" placeholder="输入关键字">
+                                                    <button @click="search"  class="ui button green">GO</button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="ui feed tweet-item item blog-item">
+                                        <!--<div class="ui feed tweet-item item blog-item">
                                             <div class="event">
                                                 <div class="content">
                                                     <div class="ui items tweet-user-info">
                                                         <div class="item">
                                                             <a href="https://my.oschina.net/liwenhoho" target="_blank">
                                                                 <div class="osc-avatar small-portrait _35x35 avatar"
-                                                                     title="会编程的花栗鼠" data-user-id="100956">
-                                                                    <img src="https://oscimg.oschina.net/oscnet/up-72134e946435775fc684fd49d86086b7.jpg!/both/50x50"
+                                                                     title="会编程的花栗鼠">
+                                                                    <img src="./images/icon.jpg"
                                                                          alt="会编程的花栗鼠" title="会编程的花栗鼠">
                                                                 </div>
                                                             </a>
@@ -408,195 +431,195 @@
                                                 <img src="./images/empty.png">
                                                 <h4 class="ui sub header grey">无内容</h4>
                                             </div>
+                                        </div>-->
+                                        <block v-if="tab[1].list.length > 0">
+                                            <div v-for="item in tab[1].list" class="ui feed tweet-item item blog-item"
+                                                 :key="item.id">
+                                                <div class="event">
+                                                    <div class="content">
+                                                        <div class="ui items tweet-user-info">
+                                                            <div class="item">
+                                                                <a @click="jumpDetail(item.id)">
+                                                                    <div class="osc-avatar small-portrait _35x35 avatar"
+                                                                         :title="item.username">
+                                                                        <img :src="item.icon?item.icon:userIcon"
+                                                                             alt="头像"
+                                                                             :title="item.username">
+                                                                    </div>
+                                                                </a>
+                                                                <div class="content">
+                                                                    <a class="user __user" @click="jumpDetail(item.id)">
+                                                                        <div v-if="item.kind==0"
+                                                                             class="ui red label horizontal"
+                                                                             data-tooltip="正在寻找">
+                                                                            寻物
+                                                                        </div>
+                                                                        <div v-else class="ui blue label horizontal"
+                                                                             data-tooltip="等待认领">
+                                                                            认领
+                                                                        </div>
+                                                                        {{item.username}}
+                                                                    </a>
+
+                                                                    <div class="extra">
+                                                                        <div class="date">{{item.time}}&nbsp;&nbsp;
+                                                                            <i v-if="item.location"
+                                                                               class="map marker alternate icon"></i>
+                                                                            <!--<span class="text-over">{{item.location}}</span>-->
+                                                                            <span>{{item.location}}</span>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="extra text">
+                                                            {{item.title}}
+                                                        </div>
+                                                        <div v-if="item.images && item.images.length > 0"
+                                                             class="extra multi-image">
+                                                            <div class="multimgs">
+                                                                <div class="wrapper single-wrapper">
+                                                                    <a @click="jumpDetail(item.id)">
+                                                                        <img v-for="src in item.images"
+                                                                             :src="imgPrefix + src" :key="src"
+                                                                             style="max-width: 160px; height: auto;">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ui horizontal list">
+                                                            <div class="item">
+                                                                <span class="ui horizontal label"
+                                                                      href="#">{{item.category}}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="meta">
+                                                            <a class="like" @click="jumpDetail(item.id)">
+                                                                <i class="eye icon"></i>
+                                                                <span data-tweet-like-count=""
+                                                                      data-tweet-id="19932613">{{item.lookCount}}</span>
+                                                            </a>
+                                                            <a class="reply" @click="jumpDetail(item.id)">
+                                                                <i class="comment outline icon"></i> <span>{{item.commentCount}}</span>
+                                                            </a>
+                                                            <span class="share">
+                                                                <i class="external icon"></i> <span
+                                                                    data-tweet-ref-count=""
+                                                                    data-tweet-id="19932613">转发</span>
+                                                            </span>
+                                                            <a class="view" @click="jumpDetail(item.id)">查看详情</a>
+                                                            <!--<div class="right">-->
+                                                            <!--<a class="ban" ban-report="" data-id="19932613"-->
+                                                            <!--data-obj-type="100"-->
+                                                            <!--data-url="https://my.oschina.net/liwenhoho/tweet/19932613">-->
+                                                            <!--<i class="ban icon"></i> 举报-->
+                                                            <!--</a>-->
+                                                            <!--</div>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </block>
+                                        <div v-else class="ui basic segment article-list">
+                                            <div class="ui center aligned basic segment">
+                                                <img src="./images/empty.png">
+                                                <h4 class="ui sub header grey">无内容</h4>
+                                            </div>
                                         </div>
                                     </block>
                                     <!--我的-->
                                     <block v-else-if="tabIndex==2">
-                                        <div class="ui feed tweet-item item blog-item">
-                                            <div class="event">
-                                                <div class="content">
-                                                    <div class="ui items tweet-user-info">
-                                                        <div class="item">
-                                                            <a href="https://my.oschina.net/liwenhoho" target="_blank">
-                                                                <div class="osc-avatar small-portrait _35x35 avatar"
-                                                                     title="会编程的花栗鼠" data-user-id="100956">
-                                                                    <img src="https://oscimg.oschina.net/oscnet/up-72134e946435775fc684fd49d86086b7.jpg!/both/50x50"
-                                                                         alt="会编程的花栗鼠" title="会编程的花栗鼠">
-                                                                </div>
-                                                            </a>
-                                                            <div class="content">
-                                                                <a class="user __user"
-                                                                   href="https://my.oschina.net/liwenhoho"
-                                                                   target="_blank">
-                                                                    <div class="ui red label horizontal"
-                                                                         data-tooltip="寻找">
-                                                                        寻找
+                                        <block v-if="tab[2].list.length > 0">
+                                            <div v-for="item in tab[2].list" class="ui feed tweet-item item blog-item"
+                                                 :key="item.id">
+                                                <div class="event">
+                                                    <div class="content">
+                                                        <div class="ui items tweet-user-info">
+                                                            <div class="item">
+                                                                <a @click="jumpDetail(item.id)">
+                                                                    <div class="osc-avatar small-portrait _35x35 avatar"
+                                                                         :title="item.username">
+                                                                        <img :src="item.icon?item.icon:userIcon"
+                                                                             alt="头像"
+                                                                             :title="item.username">
                                                                     </div>
-                                                                    会编程的花栗鼠</a>
-
-                                                                <div class="extra">
-                                                                    <div class="date">2016/12/26 04:44&nbsp;&nbsp;<i
-                                                                            class="map marker alternate icon"></i>
-                                                                        <span data-tweet-id="19932613">图书馆的地方</span>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="extra text" data-emoji-render="">
-                                                        我TM就知道，喵星人并不简单！喵星人并不简单！喵星人并不简单！喵星人并不简单！喵星人并不简单！
-                                                    </div>
-                                                    <div class="extra multi-image" data-optlog-id="19932613">
-                                                        <div class="multimgs">
-                                                            <div class="wrapper single-wrapper"
-                                                                 data-multi-image-raw="item">
-                                                                <a href="https://my.oschina.net/liwenhoho/tweet/19932613"
-                                                                   target="_blank">
-                                                                    <img data-raw-img=""
-                                                                         data-big-img="https://oscimg.oschina.net/oscnet/up-65b424a96a8bccb1a5276d2e57f2ad1a.jpg!/fp/500000"
-                                                                         data-small-img="https://oscimg.oschina.net/oscnet/up-65b424a96a8bccb1a5276d2e57f2ad1a.jpg!/sq/200"
-                                                                         src="http://www.swzl.com/upload/34bcde819ee2469086296450c05f659b.jpg"
-                                                                         data-max-width="160" data-max-height="160"
-                                                                         alt="图片"
-                                                                         style="max-width: 160px; height: auto;">
                                                                 </a>
+                                                                <div class="content">
+                                                                    <a class="user __user" @click="jumpDetail(item.id)">
+                                                                        <div v-if="item.kind==0"
+                                                                             class="ui red label horizontal"
+                                                                             data-tooltip="正在寻找">
+                                                                            寻物
+                                                                        </div>
+                                                                        <div v-else class="ui blue label horizontal"
+                                                                             data-tooltip="等待认领">
+                                                                            认领
+                                                                        </div>
+                                                                        {{item.username}}
+                                                                    </a>
+
+                                                                    <div class="extra">
+                                                                        <div class="date">{{item.time}}&nbsp;&nbsp;
+                                                                            <i v-if="item.location"
+                                                                               class="map marker alternate icon"></i>
+                                                                            <!--<span class="text-over">{{item.location}}</span>-->
+                                                                            <span>{{item.location}}</span>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="ui horizontal list">
-                                                        <div class="item">
-                                                            <a class="ui horizontal label"
-                                                               href="https://my.oschina.net/MStart?q=">安卓</a>
+                                                        <div class="extra text">
+                                                            {{item.title}}
                                                         </div>
-                                                        <div class="item">
-                                                            <a class="ui horizontal label"
-                                                               href="https://my.oschina.net/MStart?q=">手机</a>
+                                                        <div v-if="item.images && item.images.length > 0"
+                                                             class="extra multi-image">
+                                                            <div class="multimgs">
+                                                                <div class="wrapper single-wrapper">
+                                                                    <a @click="jumpDetail(item.id)">
+                                                                        <img v-for="src in item.images"
+                                                                             :src="imgPrefix + src" :key="src"
+                                                                             style="max-width: 160px; height: auto;">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="meta">
-                                                        <a class="like " data-tweet-like-btn=""
-                                                           data-tweet-id="19932613">
-                                                            <i class="eye    icon"></i>
-                                                            <span data-tweet-like-count=""
-                                                                  data-tweet-id="19932613">2</span>
-                                                        </a>
-                                                        <a class="reply"
-                                                           href="https://my.oschina.net/liwenhoho/tweet/19932613#comments"
-                                                           target="_blank">
-                                                            <i class="comment outline icon"></i> <span>1</span> 评论
-                                                        </a>
-                                                        <a class="share">
-                                                            <i class="external icon"></i> <span data-tweet-ref-count=""
-                                                                                                data-tweet-id="19932613">转发</span>
-                                                        </a>
-                                                        <a class="view"
-                                                           href="https://my.oschina.net/liwenhoho/tweet/19932613"
-                                                           target="_blank">查看详情</a>
-                                                        <div class="right">
-                                                            <a class="ban" ban-report="" data-id="19932613"
-                                                               data-obj-type="100"
-                                                               data-url="https://my.oschina.net/liwenhoho/tweet/19932613">
-                                                                <i class="ban icon"></i> 举报
+                                                        <div class="ui horizontal list">
+                                                            <div class="item">
+                                                                <span class="ui horizontal label"
+                                                                      href="#">{{item.category}}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="meta">
+                                                            <a class="like" @click="jumpDetail(item.id)">
+                                                                <i class="eye icon"></i>
+                                                                <span data-tweet-like-count=""
+                                                                      data-tweet-id="19932613">{{item.lookCount}}</span>
                                                             </a>
+                                                            <a class="reply" @click="jumpDetail(item.id)">
+                                                                <i class="comment outline icon"></i> <span>{{item.commentCount}}</span>
+                                                            </a>
+                                                            <span class="share">
+                                                                <i class="external icon"></i> <span
+                                                                    data-tweet-ref-count=""
+                                                                    data-tweet-id="19932613">转发</span>
+                                                            </span>
+                                                            <a class="view" @click="jumpDetail(item.id)">查看详情</a>
+                                                            <!--<div class="right">-->
+                                                            <!--<a class="ban" ban-report="" data-id="19932613"-->
+                                                            <!--data-obj-type="100"-->
+                                                            <!--data-url="https://my.oschina.net/liwenhoho/tweet/19932613">-->
+                                                            <!--<i class="ban icon"></i> 举报-->
+                                                            <!--</a>-->
+                                                            <!--</div>-->
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="ui feed tweet-item item blog-item">
-                                            <div class="event">
-                                                <div class="content">
-                                                    <div class="ui items tweet-user-info">
-                                                        <div class="item">
-                                                            <a href="https://my.oschina.net/liwenhoho" target="_blank">
-                                                                <div class="osc-avatar small-portrait _35x35 avatar"
-                                                                     title="会编程的花栗鼠" data-user-id="100956">
-                                                                    <img src="https://oscimg.oschina.net/oscnet/up-72134e946435775fc684fd49d86086b7.jpg!/both/50x50"
-                                                                         alt="会编程的花栗鼠" title="会编程的花栗鼠">
-                                                                </div>
-                                                            </a>
-                                                            <div class="content">
-                                                                <a class="user __user"
-                                                                   href="https://my.oschina.net/liwenhoho"
-                                                                   target="_blank">
-                                                                    <div class="ui red label horizontal"
-                                                                         data-tooltip="寻找">
-                                                                        寻找
-                                                                    </div>
-                                                                    会编程的花栗鼠</a>
-
-                                                                <div class="extra">
-                                                                    <div class="date">2016/12/26 04:44&nbsp;&nbsp;<i
-                                                                            class="map marker alternate icon"></i>
-                                                                        <span data-tweet-id="19932613">图书馆的地方</span>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="extra text" data-emoji-render="">
-                                                        我TM就知道，喵星人并不简单！喵星人并不简单！喵星人并不简单！喵星人并不简单！喵星人并不简单！
-                                                    </div>
-                                                    <div class="extra multi-image" data-optlog-id="19932613">
-                                                        <div class="multimgs">
-                                                            <div class="wrapper single-wrapper"
-                                                                 data-multi-image-raw="item">
-                                                                <a href="https://my.oschina.net/liwenhoho/tweet/19932613"
-                                                                   target="_blank">
-                                                                    <img data-raw-img=""
-                                                                         data-big-img="https://oscimg.oschina.net/oscnet/up-65b424a96a8bccb1a5276d2e57f2ad1a.jpg!/fp/500000"
-                                                                         data-small-img="https://oscimg.oschina.net/oscnet/up-65b424a96a8bccb1a5276d2e57f2ad1a.jpg!/sq/200"
-                                                                         src="http://www.swzl.com/upload/34bcde819ee2469086296450c05f659b.jpg"
-                                                                         data-max-width="160" data-max-height="160"
-                                                                         alt="图片"
-                                                                         style="max-width: 160px; height: auto;">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="ui horizontal list">
-                                                        <div class="item">
-                                                            <a class="ui horizontal label"
-                                                               href="https://my.oschina.net/MStart?q=">安卓</a>
-                                                        </div>
-                                                        <div class="item">
-                                                            <a class="ui horizontal label"
-                                                               href="https://my.oschina.net/MStart?q=">手机</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="meta">
-                                                        <a class="like " data-tweet-like-btn=""
-                                                           data-tweet-id="19932613">
-                                                            <i class="eye    icon"></i>
-                                                            <span data-tweet-like-count=""
-                                                                  data-tweet-id="19932613">2</span>
-                                                        </a>
-                                                        <a class="reply"
-                                                           href="https://my.oschina.net/liwenhoho/tweet/19932613#comments"
-                                                           target="_blank">
-                                                            <i class="comment outline icon"></i> <span>1</span> 评论
-                                                        </a>
-                                                        <a class="share">
-                                                            <i class="external icon"></i> <span data-tweet-ref-count=""
-                                                                                                data-tweet-id="19932613">转发</span>
-                                                        </a>
-                                                        <a class="view"
-                                                           href="https://my.oschina.net/liwenhoho/tweet/19932613"
-                                                           target="_blank">查看详情</a>
-                                                        <div class="right">
-                                                            <a class="ban" ban-report="" data-id="19932613"
-                                                               data-obj-type="100"
-                                                               data-url="https://my.oschina.net/liwenhoho/tweet/19932613">
-                                                                <i class="ban icon"></i> 举报
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ui basic segment article-list">
+                                        </block>
+                                        <div v-else class="ui basic segment article-list">
                                             <div class="ui center aligned basic segment">
                                                 <img src="./images/empty.png">
                                                 <h4 class="ui sub header grey">无内容</h4>
@@ -609,7 +632,7 @@
                                             <a href="https://my.oschina.net/barat">
                                                 <div class="osc-avatar small-portrait _35x35" title="巴拉迪维"
                                                      data-user-id="2340783">
-                                                    <img src="https://oscimg.oschina.net/oscnet/up-zdibcheh15q9q0tyfwd6j90o0de2da0h!/both/50x50?t=1552403383000"
+                                                    <img src="./images/icon.jpg"
                                                          alt="巴拉迪维" title="巴拉迪维">
                                                 </div>
                                             </a>
@@ -650,49 +673,62 @@
                                     <div v-else class="item activity-item">
                                         <div class="ui form" style="width: 100%;">
                                             <div class="field">
-                                                <label><b>类别：</b></label>
-                                                <div class="field inline">
+                                                <label><b>类型：</b></label>
+                                                <div class="field inline" @click="changeTab4EventKind(0)">
                                                     <div class="ui radio checkbox">
-                                                        <input type="radio" name="fruit" checked="true" tabindex="0"
-                                                               class="hidden">
+                                                        <input type="radio" name="fruit" :checked="tab4.applyKind==0">
                                                         <label>寻物启事</label>
                                                     </div>
                                                 </div>
-                                                <div class="field inline">
+                                                <div class="field inline" @click="changeTab4EventKind(1)">
                                                     <div class="ui radio checkbox">
-                                                        <input type="radio" name="fruit" tabindex="0" class="hidden">
-                                                        <label>招领启事</label>
+                                                        <input type="radio" name="fruit" :checked="tab4.applyKind==1">
+                                                        <label>认领启事</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="field">
-                                                <label><b>分类：</b></label>
+                                                <label><b>类别：</b></label>
                                                 <div class="ui horizontal list">
-                                                    <div class="item ">
-                                                        <a class="ui horizontal label green">安卓</a>
+                                                    <div v-for="(item, index) in category" class="item"
+                                                         :key="item.name">
+                                                        <a @click="changeTab4CategoryIndex(index)"
+                                                           class="ui horizontal label"
+                                                           :class="{green: tab4.categoryIndex == index}">{{item.name}}</a>
                                                     </div>
-                                                    <div class="item">
-                                                        <a class="ui horizontal label">安卓</a>
-                                                    </div>
-                                                    <div class="item">
-                                                        <a class="ui horizontal label">安卓</a>
-                                                    </div>
-
-
+                                                    <!--<div class="item ">-->
+                                                    <!--<a class="ui horizontal label green">安卓</a>-->
+                                                    <!--</div>-->
                                                 </div>
                                             </div>
 
                                             <div class="field">
                                                 <label>标题：</label>
-                                                <input type="text" placeholder="简述">
+                                                <input type="text" v-model="tab4.title" placeholder="简述">
                                             </div>
                                             <div class="field">
                                                 <label>图片：</label>
-                                                <div @click="changeDiv" class="ui image up-img"
+                                                <div v-for="(item, index) in tab4.images" class="ui image up-img"
+                                                     style="display: inline-block !important;" :key="index">
+                                                    <div class="ui fluid image up-img">
+                                                        <a class="ui right corner label" @click="removeImg(index)">
+                                                            <i class="close icon"></i>
+                                                        </a>
+                                                        <img :src="item">
+                                                    </div>
+                                                </div>
+
+                                                <div v-if="tab4.images.length < imgTotal" @click="changeImg(0)"
+                                                     class="ui image up-img"
                                                      style="display: inline-block !important;">
-                                                    <input id="in1" type="file" accept="image/*"
-                                                           onchange="changeImg(this)">
-                                                    <img id="img1" src="./images/plus.png">
+                                                    <!--<input id="in1" type="file" accept="image/*"-->
+                                                    <!--onchange="changeImg(this)">-->
+                                                    <!--<img id="img1" src="./images/plus.png">-->
+                                                    <div class="ui fluid image up-img">
+                                                        <input id="imgInput" type="file" accept="image/*"
+                                                               onchange="changeInput(this)">
+                                                        <img src="./images/plus.png">
+                                                    </div>
                                                 </div>
                                                 <!--<div class="ui image up-img" style="display: inline-block !important;">-->
                                                 <!--</div>-->
@@ -704,15 +740,17 @@
                                             <div class=" field">
                                                 <label class="inline">详情：</label>
                                                 <!--<div class="inline twelve wide field">-->
-                                                <textarea class="field" rows="5" placeholder="详细说明"></textarea>
+                                                <textarea class="field" v-model="tab4.about" rows="5"
+                                                          placeholder="详细说明"></textarea>
                                                 <!--</div>-->
                                             </div>
                                             <div class="field">
                                                 <label>地点：</label>
-                                                <input type="text" placeholder="选填">
+                                                <input type="text" v-model="tab4.location" placeholder="选填">
                                             </div>
                                             <div class="field" style="text-align: center;">
-                                                <button class="ui button green" type="submit">提交</button>
+                                                <button @click="submitPub" class="ui button green" type="submit">提交
+                                                </button>
                                             </div>
                                         </div>
 
@@ -759,7 +797,8 @@
 <script src="js/common.js"></script>
 <script src="./js/semantic.min.js"></script>
 
+<script src="js/common.js"></script>
+<script src="./js/layer.js"></script>
 <script src="./js/home.js"></script>
-
 </body>
 </html>
