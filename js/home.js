@@ -74,7 +74,17 @@ var app = new Vue({
             },
             {},
         ],
-        tab3: {},
+        tab3: [
+           /* {
+                id: "00000000001",
+                userId: "0002",
+                icon: null,
+                username: "2018",
+                time: "2019-04-17 16:20",
+                title: "我的小苹果丢了",
+                content: "你是什么苹果？"
+            }*/
+        ],
         imgTotal: 3,//最多3张图片
         tab4: {
             applyKind: 0,
@@ -122,8 +132,8 @@ var app = new Vue({
         },
         changeTab0Kind(index) {
             this.tab[0].search.kind = index;
-            pageLostFound(this.tab[0].search);
-            console.log(this.tab[0].search);
+            pageLostFound(this.tab[0].search, this.tab[0]);
+            console.log(this.tab[0].search, this.tab[0]);
         },
         changeTab0Category(index) {
             if (index < 0) {
@@ -131,8 +141,8 @@ var app = new Vue({
             } else {
                 this.tab[0].search.category = this.category[index].name;
             }
-            pageLostFound(this.tab[0].search);
-            console.log(this.tab[0].search);
+            pageLostFound(this.tab[0].search, this.tab[0]);
+            console.log(this.tab[0].search, this.tab[0]);
         },
         changeTab4EventKind(index) {
             console.log(index);
@@ -161,8 +171,8 @@ var app = new Vue({
             this.tab4.images.splice(index, 1);
         },
         jumpDetail(id) {
-            saveSession("detailId", id);
-            window.open("./detail.html", "_blank");
+            //跳转详情页面
+            window.open("./detail.html?id=" + id, "_self");
         }
     }
 });

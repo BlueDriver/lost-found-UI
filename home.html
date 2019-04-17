@@ -275,12 +275,15 @@
                                                         <div v-if="item.images && item.images.length > 0"
                                                              class="extra multi-image">
                                                             <div class="multimgs">
-                                                                <div class="wrapper single-wrapper">
-                                                                    <a @click="jumpDetail(item.id)">
-                                                                        <img v-for="src in item.images"
-                                                                             :src="imgPrefix + src" :key="src"
-                                                                             style="max-width: 160px; height: auto;">
-                                                                    </a>
+                                                                <div class="multimgs">
+                                                                    <div class="wrapper single-wrapper"
+                                                                         v-for="src in item.images">
+                                                                        <a>
+                                                                            <img @click="jumpDetail(item.id)"
+                                                                                 :src="imgPrefix + src" :key="src"
+                                                                                 style="max-width: 160px; height: auto;">
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -329,8 +332,9 @@
                                         <div class="ui form">
                                             <div class="inline  fields">
                                                 <div class="eight wide field">
-                                                    <input v-model="tab[1].search.keyword" type="text" placeholder="输入关键字">
-                                                    <button @click="search"  class="ui button green">GO</button>
+                                                    <input v-model="tab[1].search.keyword" type="text"
+                                                           placeholder="输入关键字">
+                                                    <button @click="search" class="ui button green">GO</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -479,12 +483,15 @@
                                                         <div v-if="item.images && item.images.length > 0"
                                                              class="extra multi-image">
                                                             <div class="multimgs">
-                                                                <div class="wrapper single-wrapper">
-                                                                    <a @click="jumpDetail(item.id)">
-                                                                        <img v-for="src in item.images"
-                                                                             :src="imgPrefix + src" :key="src"
-                                                                             style="max-width: 160px; height: auto;">
-                                                                    </a>
+                                                                <div class="multimgs">
+                                                                    <div class="wrapper single-wrapper"
+                                                                         v-for="src in item.images">
+                                                                        <a>
+                                                                            <img @click="jumpDetail(item.id)"
+                                                                                 :src="imgPrefix + src" :key="src"
+                                                                                 style="max-width: 160px; height: auto;">
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -577,9 +584,10 @@
                                                         <div v-if="item.images && item.images.length > 0"
                                                              class="extra multi-image">
                                                             <div class="multimgs">
-                                                                <div class="wrapper single-wrapper">
-                                                                    <a @click="jumpDetail(item.id)">
-                                                                        <img v-for="src in item.images"
+                                                                <div class="wrapper single-wrapper"
+                                                                     v-for="src in item.images">
+                                                                    <a>
+                                                                        <img @click="jumpDetail(item.id)"
                                                                              :src="imgPrefix + src" :key="src"
                                                                              style="max-width: 160px; height: auto;">
                                                                     </a>
@@ -588,15 +596,13 @@
                                                         </div>
                                                         <div class="ui horizontal list">
                                                             <div class="item">
-                                                                <span class="ui horizontal label"
-                                                                      href="#">{{item.category}}</span>
+                                                                <span class="ui horizontal label">{{item.category}}</span>
                                                             </div>
                                                         </div>
                                                         <div class="meta">
                                                             <a class="like" @click="jumpDetail(item.id)">
                                                                 <i class="eye icon"></i>
-                                                                <span data-tweet-like-count=""
-                                                                      data-tweet-id="19932613">{{item.lookCount}}</span>
+                                                                <span>{{item.lookCount}}</span>
                                                             </a>
                                                             <a class="reply" @click="jumpDetail(item.id)">
                                                                 <i class="comment outline icon"></i> <span>{{item.commentCount}}</span>
@@ -627,45 +633,99 @@
                                         </div>
                                     </block>
                                     <!--消息-->
-                                    <div v-else-if="tabIndex==3" class="item activity-item">
-                                        <div class="ui avatar image">
-                                            <a href="https://my.oschina.net/barat">
-                                                <div class="osc-avatar small-portrait _35x35" title="巴拉迪维"
-                                                     data-user-id="2340783">
-                                                    <img src="./images/icon.jpg"
-                                                         alt="巴拉迪维" title="巴拉迪维">
+                                    <!-- <div v-else-if="tabIndex==3" v-for="item in tab3" class="item activity-item"
+                                          :key="item.id">
+                                         <div class="ui avatar image">
+                                             <a>
+                                                 <div class="osc-avatar small-portrait _35x35">
+                                                     <img style="width:35px !important; height: 35px !important;"
+                                                          :src="item.icon?item.icon:userIcon">
+                                                 </div>
+                                             </a>
+                                         </div>
+                                         <div class="content">
+                                             <div class="description">
+                                                 <a class="user __user">{{item.username}}</a>
+                                                 {{item.time}} 评论了：
+                                                 <a href="" target="_self">{{item.title}}</a>
+                                             </div>
+                                             &lt;!&ndash;<div class="description summary" data-emoji-render="">&ndash;&gt;
+                                             &lt;!&ndash;@开源中国首席技术官 你不怕，是因为你没有看到我看到的那些恐怖。。。&ndash;&gt;
+                                             &lt;!&ndash;</div>&ndash;&gt;
+                                             <div class="extra referer">
+                                                 <div class="referer-wrapper">
+                                                     &lt;!&ndash;<a class="user" href="https://my.oschina.net/hardbone" title="@局长"&ndash;&gt;
+                                                     &lt;!&ndash;target="_blank">@局长</a>&ndash;&gt;
+                                                     <div class="extra text" data-emoji-render="">
+                                                         {{item.content}}
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             <div class="extra">
+                                                 <div class="ui horizontal small list">
+                                                     <a class="item"><i class="trash alternate outline icon"></i>删除</a>
+                                                     <a class="item">
+                                                         <i class="external link alternate icon"></i>
+                                                         查看原文
+                                                     </a>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div v-else-if="tabIndex==3 && tab3.length == 0" class="ui basic segment article-list">
+                                         <div class="ui center aligned basic segment">
+                                             <img src="./images/empty.png">
+                                             <h4 class="ui sub header grey">无内容</h4>
+                                         </div>
+                                     </div>-->
+                                    <div v-else-if="tabIndex==3" class="ui basic segment article-list">
+                                        <div class="ui divided items space-list-container activity-container">
+                                            <div v-for="item in tab3" :key="item.id" class="item activity-item">
+                                                <div class="ui avatar image">
+                                                    <a>
+                                                        <div class="osc-avatar small-portrait _35x35">
+                                                            <img :src="item.icon?item.icon:userIcon">
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <div class="description">
-                                                <a class="user __user" href="https://my.oschina.net/barat" title="巴拉迪维"
-                                                   target="_blank">巴拉迪维</a> 04/07 23:51 评论了新闻：<a
-                                                    href="https://www.oschina.net/news/105724/do-something-for-996-programmers-in-china"
-                                                    target="_blank">Python 之父再度发声：我们能为中国的“996”程序员做什么？</a>
-                                            </div>
-                                            <div class="description summary" data-emoji-render="">
-                                                @开源中国首席技术官 你不怕，是因为你没有看到我看到的那些恐怖。。。
-                                            </div>
-                                            <div class="extra referer">
-                                                <div class="referer-wrapper">
-                                                    <a class="user" href="https://my.oschina.net/hardbone" title="@局长"
-                                                       target="_blank">@局长</a>
-                                                    <div class="extra text" data-emoji-render="">
-                                                        一周前，当 996.ICU 的 GitHub repo 火速在互联网广泛传播时，Python 之父 Guido v...
+                                                <div class="content">
+                                                    <div class="description">
+                                                        <a class="user __user">{{item.username}}</a>&nbsp;&nbsp;{{item.time}}
+
+                                                    </div>
+                                                    <div class="description summary" data-emoji-render="">
+                                                        评论了：<a class="user">{{item.title}}</a>
+                                                    </div>
+                                                    <div class="extra referer">
+                                                        <div class="referer-wrapper">
+                                                            <div class="extra text" data-emoji-render="">
+                                                                {{item.content}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="extra">
+                                                        <div class="ui horizontal small list">
+                                                            <a class="item">
+                                                                <i class="trash alternate outline icon"></i>删除
+                                                            </a>
+                                                            <a class="item">
+                                                                <i class="external link alternate icon"></i> 查看原文</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="extra">
-                                                <div class="ui horizontal small list">
-                                                    <a class="item"
-                                                       href="https://www.oschina.net/news/105724/do-something-for-996-programmers-in-china#comments"
-                                                       target="_blank"><i class="comment outline icon"></i> 223 </a>
-                                                    <a class="item"
-                                                       href="https://www.oschina.net/news/105724/do-something-for-996-programmers-in-china"
-                                                       target="_blank"><i class="external link alternate icon"></i> 查看原文</a>
+                                            <div v-if="tab3 && tab3.length == 0" class="ui basic segment article-list">
+                                                <div class="ui center aligned basic segment">
+                                                    <img src="./images/empty.png">
+                                                    <h4 class="ui sub header grey">无内容</h4>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="page-load-status" >
+                                            <!--<p class="infinite-scroll-request">-->
+                                                <!--<i class="ui active small inline loader"></i>-->
+                                            <!--</p>-->
+                                            <p class="infinite-scroll-last">没有更多内容</p>
                                         </div>
                                     </div>
 
