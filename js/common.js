@@ -28,12 +28,13 @@ $.ajaxSetup({
 //将对象的value置为空串，key为忽略项
 function cleanObj(obj, key) {
     for (let k in obj) {
-        if(key && key === k){
+        if (key && key === k) {
             continue;
         }
         obj[k] = "";
     }
 }
+
 //是否可用LocalStorage
 function canUseLocal() {
     if (!window.localStorage) {
@@ -44,6 +45,7 @@ function canUseLocal() {
         return true;
     }
 }
+
 //存入都是String
 function saveLocal(key, value) {
     if (canUseLocal()) {
@@ -55,6 +57,7 @@ function saveLocal(key, value) {
         storage.setItem(key, value);
     }
 }
+
 //返回时String，如果是json要转换，没有则是undefined
 function getLocal(key) {
     if (canUseLocal()) {
@@ -69,9 +72,9 @@ function deleteLocal(key) {
 }
 
 function canUseSession() {
-    if(sessionStorage){
+    if (sessionStorage) {
         return true;
-    }else{
+    } else {
         console.log("can not user sessionStorage");
         alert("浏览器不支持sessionStorage");
         return false;
@@ -87,14 +90,39 @@ function saveSession(key, value) {
         sessionStorage.setItem(key, value)
     }
 }
+
 function getSession(key) {
     if (canUseSession()) {
         return sessionStorage.getItem(key);
     }
     return null;
 }
+
 function deleteSession(key) {
     sessionStorage.removeItem(key);
+}
+
+//paraName 等找参数的名称
+function getUrlParam(paramName) {
+    let url = document.location.toString();
+    let arrObj = url.split("?");
+
+    if (arrObj.length > 1) {
+        let arrPara = arrObj[1].split("&");
+        let arr;
+
+        for (let i = 0; i < arrPara.length; i++) {
+            arr = arrPara[i].split("=");
+
+            if (arr != null && arr[0] == paramName) {
+                return arr[1];
+            }
+        }
+        return "";
+    }
+    else {
+        return "";
+    }
 }
 
 //显示loading
