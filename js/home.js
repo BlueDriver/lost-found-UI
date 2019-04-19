@@ -75,15 +75,15 @@ var app = new Vue({
             {},
         ],
         tab3: [
-           /* {
-                id: "00000000001",
-                userId: "0002",
-                icon: null,
-                username: "2018",
-                time: "2019-04-17 16:20",
-                title: "我的小苹果丢了",
-                content: "你是什么苹果？"
-            }*/
+            /* {
+                 id: "00000000001",
+                 userId: "0002",
+                 icon: null,
+                 username: "2018",
+                 time: "2019-04-17 16:20",
+                 title: "我的小苹果丢了",
+                 content: "你是什么苹果？"
+             }*/
         ],
         imgTotal: 3,//最多3张图片
         tab4: {
@@ -117,9 +117,9 @@ var app = new Vue({
 
             } else if (index == 2) {
                 console.log(this.tab[2].search.username);
-                pageLostFound(this.tab[2].search, this.tab[2]);
-            } else if (index == 3) {
-
+                pageLostFound(this.tab[2].search, this.tab[2], false);
+            } else if (index == 3) {//我的消息
+                getMessages(this);
             } else if (index == 4) {
 
             }
@@ -128,21 +128,58 @@ var app = new Vue({
             this.tab[1].search.pageNum = 0;
             this.tab[1].totalPage = 0;
             this.tab[1].total = 0;
-            pageLostFound(this.tab[1].search, this.tab[1]);
+            pageLostFound(this.tab[1].search, this.tab[1], false);
         },
         changeTab0Kind(index) {
+            this.tab[0].search.pageNum = 0;
+            // this.tab[0].list = [];
             this.tab[0].search.kind = index;
-            pageLostFound(this.tab[0].search, this.tab[0]);
+            pageLostFound(this.tab[0].search, this.tab[0], false);
             console.log(this.tab[0].search, this.tab[0]);
         },
         changeTab0Category(index) {
+            this.tab[0].search.pageNum = 0;
+            // this.tab[0].list = [];
             if (index < 0) {
                 this.tab[0].search.category = "";
             } else {
                 this.tab[0].search.category = this.category[index].name;
             }
-            pageLostFound(this.tab[0].search, this.tab[0]);
+            pageLostFound(this.tab[0].search, this.tab[0], false);
             console.log(this.tab[0].search, this.tab[0]);
+        },
+        nextPage(tabIndex) {
+            this.tab[tabIndex].search.pageNum++;
+            pageLostFound(app.tab[0].search, app.tab[0], true);
+        },
+        deletePub(id) {
+            console.log(id);
+            layer.confirm('确定要删除码？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                deletePub({
+                    idList: [
+                        id
+                    ]
+                });
+            }, function () {
+
+            });
+
+        },
+        removeComment(id){
+            console.log(id);
+            layer.confirm('确定要删除码？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                removeComment({
+                    idList: [
+                        id
+                    ]
+                });
+            }, function () {
+
+            });
         },
         changeTab4EventKind(index) {
             console.log(index);
@@ -178,8 +215,76 @@ var app = new Vue({
 });
 
 $(function () {
-    pageLostFound(app.tab[0].search, app.tab[0]);
+    pageLostFound(app.tab[0].search, app.tab[0], true);
 });
+//删除招领信息
+function deletePub(data) {
+    $.ajax({
+        url: baseUrl + "/user/removeLost",
+        method: "POST",
+        data: JSON.stringify(data),
+        success: function (res, status) {
+            console.log(res);
+            if (status == "success") {
+                if (res.success) {
+                    pageLostFound(app.tab[2].search, app.tab[2], false);
+                } else {
+                    showAlertError(res.msg)
+                }
+            } else {
+                console.log(res);
+                alert(res)
+            }
+        }
+    });
+
+}
+
+
+//删除消息（评论）
+function removeComment(data) {
+    $.ajax({
+        url: baseUrl + "/user/removeComment",
+        method: "POST",
+        data: JSON.stringify(data),
+        success: function (res, status) {
+            console.log(res);
+            if (status == "success") {
+                if (res.success) {
+                    getMessages(app);
+                } else {
+                    showAlertError(res.msg)
+                }
+            } else {
+                console.log(res);
+                alert(res)
+            }
+        }
+    });
+
+}
+
+//我的消息(与我发布的信息相关的评论）
+function getMessages(app) {
+    $.ajax({
+        url: baseUrl + "/user/messages",
+        method: "POST",
+        success: function (res, status) {
+            console.log(res);
+            if (status == "success") {
+                if (res.success) {
+                    app.tab3 = res.data.list;
+                } else {
+                    showAlertError(res.msg)
+                }
+            } else {
+                console.log(res);
+                alert(res)
+            }
+        }
+    });
+
+}
 
 //选择上传图片
 function changeInput(obj) {
@@ -250,7 +355,7 @@ function pubLostFound(data) {
 }
 
 //分页查寻启事列表
-function pageLostFound(data, result) {
+function pageLostFound(data, result, append) {
     //console.log(data);
     $.ajax({
         url: baseUrl + "/user/page",
@@ -264,7 +369,14 @@ function pageLostFound(data, result) {
                     result.search.pageSize = res.data.page.pageSize;
                     result.totalPage = res.data.page.totalPage;
                     result.total = res.data.page.total;
-                    result.list = res.data.page.list;
+                    if (append) {
+                        for (let v in res.data.page.list) {
+                            //console.log(v);
+                            result.list.push(res.data.page.list[v]);
+                        }
+                    } else {
+                        result.list = res.data.page.list;
+                    }
                 } else {
                     showAlertError(res.msg)
                 }

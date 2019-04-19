@@ -181,7 +181,9 @@
                                     <span href="#" class="item" :class="{active: tabIndex == 2}"
                                           @click="changeTab(2)">我的</span>
                                     <span href="#" class="item" :class="{active: tabIndex == 3}"
-                                          @click="changeTab(3)">消息<div class="floating ui red label">22</div></span>
+                                          @click="changeTab(3)">消息
+                                        <!--<div class="floating ui red label">22</div>-->
+                                    </span>
                                     <span href="#" class="item" :class="{active: tabIndex == 4}"
                                           @click="changeTab(4)">发布</span>
                                 </div>
@@ -608,11 +610,13 @@
                                                                 <i class="comment outline icon"></i> <span>{{item.commentCount}}</span>
                                                             </a>
                                                             <span class="share">
-                                                                <i class="external icon"></i> <span
-                                                                    data-tweet-ref-count=""
-                                                                    data-tweet-id="19932613">转发</span>
+                                                                <i class="external icon"></i>
+                                                                <span>转发</span>
                                                             </span>
-                                                            <a class="view" @click="jumpDetail(item.id)">查看详情</a>
+                                                            <a class="like" @click="deletePub(item.id)">
+                                                                <i class="trash alternate outline icon"></i>删除
+                                                            </a>
+                                                            <!--<a class="view" @click="jumpDetail(item.id)">查看详情</a>-->
                                                             <!--<div class="right">-->
                                                             <!--<a class="ban" ban-report="" data-id="19932613"-->
                                                             <!--data-obj-type="100"-->
@@ -633,51 +637,6 @@
                                         </div>
                                     </block>
                                     <!--消息-->
-                                    <!-- <div v-else-if="tabIndex==3" v-for="item in tab3" class="item activity-item"
-                                          :key="item.id">
-                                         <div class="ui avatar image">
-                                             <a>
-                                                 <div class="osc-avatar small-portrait _35x35">
-                                                     <img style="width:35px !important; height: 35px !important;"
-                                                          :src="item.icon?item.icon:userIcon">
-                                                 </div>
-                                             </a>
-                                         </div>
-                                         <div class="content">
-                                             <div class="description">
-                                                 <a class="user __user">{{item.username}}</a>
-                                                 {{item.time}} 评论了：
-                                                 <a href="" target="_self">{{item.title}}</a>
-                                             </div>
-                                             &lt;!&ndash;<div class="description summary" data-emoji-render="">&ndash;&gt;
-                                             &lt;!&ndash;@开源中国首席技术官 你不怕，是因为你没有看到我看到的那些恐怖。。。&ndash;&gt;
-                                             &lt;!&ndash;</div>&ndash;&gt;
-                                             <div class="extra referer">
-                                                 <div class="referer-wrapper">
-                                                     &lt;!&ndash;<a class="user" href="https://my.oschina.net/hardbone" title="@局长"&ndash;&gt;
-                                                     &lt;!&ndash;target="_blank">@局长</a>&ndash;&gt;
-                                                     <div class="extra text" data-emoji-render="">
-                                                         {{item.content}}
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                             <div class="extra">
-                                                 <div class="ui horizontal small list">
-                                                     <a class="item"><i class="trash alternate outline icon"></i>删除</a>
-                                                     <a class="item">
-                                                         <i class="external link alternate icon"></i>
-                                                         查看原文
-                                                     </a>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div v-else-if="tabIndex==3 && tab3.length == 0" class="ui basic segment article-list">
-                                         <div class="ui center aligned basic segment">
-                                             <img src="./images/empty.png">
-                                             <h4 class="ui sub header grey">无内容</h4>
-                                         </div>
-                                     </div>-->
                                     <div v-else-if="tabIndex==3" class="ui basic segment article-list">
                                         <div class="ui divided items space-list-container activity-container">
                                             <div v-for="item in tab3" :key="item.id" class="item activity-item">
@@ -705,11 +664,12 @@
                                                     </div>
                                                     <div class="extra">
                                                         <div class="ui horizontal small list">
-                                                            <a class="item">
+                                                            <a class="item" @click="removeComment(item.id)">
                                                                 <i class="trash alternate outline icon"></i>删除
                                                             </a>
-                                                            <a class="item">
-                                                                <i class="external link alternate icon"></i> 查看原文</a>
+                                                           <!-- <a class="item">
+                                                                <i class="external link alternate icon"></i> 查看原文
+                                                            </a>-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -818,18 +778,22 @@
 
 
                                 </div>
-                                <div class="page-load-status">
+                              <!--  <div class="page-load-status">
                                     <p class="infinite-scroll-request">
                                         <i class="ui active small inline loader"></i>
                                     </p>
                                     <p class="infinite-scroll-last">没有更多内容</p>
                                     <p class="infinite-scroll-error">加载失败，请刷新页面</p>
+                                </div>-->
+                                <a v-if="tab[0].search.pageNum+1 < tab[0].totalPage && tabIndex == 0" @click="nextPage(0)"
+                                   class="ui fluid button load-more-button" style="display: block;">加载更多</a>
+                                <div v-else class="page-load-status" :style="{display: tabIndex==0?'block':'none'}">
+                                    <p class="infinite-scroll-last">没有更多内容</p>
                                 </div>
-                                <a class="ui fluid button load-more-button" style="display: none">加载更多</a>
-                                <p class="pagination">
+                               <!-- <p class="pagination">
                                     <a class="pagination__next" style="display: none"
-                                       href="https://my.oschina.net/MStart/widgets/_space_index_newest_blog?catalogId=0&q=&p=2&type=ajax">下一页</a>
-                                </p>
+                                       href="">下一页</a>
+                                </p>-->
                             </div>
                         </div>
                     </div>

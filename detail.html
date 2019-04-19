@@ -105,6 +105,9 @@
                                         <span data-tweet-ref-count></span>
                                         转发
                                     </a>
+                                    <a v-if="item.isSelf" class="like" @click="deletePub(item.id)">
+                                        <i class="trash alternate outline icon"></i>删除
+                                    </a>
                                     <!--  <div class="right">
                                           <a class="ban" ban-report data-id="19937739" data-obj-type="100"
                                              data-url="https://my.oschina.net/u/2553562/tweet/19937739">
