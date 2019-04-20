@@ -153,7 +153,8 @@
                                 <!--<input id="pubTweet" type="checkbox" class="hidden" v-model="isPubTweet">-->
                                 <!--<label for="pubTweet">在动态中显示</label>-->
                                 <!--</div>-->
-                                <button class="ui primary right floated small button " @click="pubComment">发布评论
+                                <button :class="{disabled: !(item.id && item.id.length > 0)}"
+                                        class="ui primary right floated small button" @click="pubComment">发布评论
                                 </button>
                             </div>
                         </div>
@@ -452,9 +453,9 @@
 
 
 <script src="./js/semantic.min.js"></script>
-<script src="js/common.js"></script>
+<script src="js/mine/common.js"></script>
 <script src="./js/layer.js"></script>
-<script src="./js/detail.js"></script>
+<script src="js/mine/detail.js"></script>
 
 </body>
 </html>

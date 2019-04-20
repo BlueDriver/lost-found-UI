@@ -92,7 +92,7 @@
 <!--<link href="https://cdn.bootcss.com/toastr.js/latest/toastr.min.css" rel="stylesheet">-->
 
 <script src="./js/layer.js"></script>
-<script src="js/common.js"></script>
+<script src="js/mine/common.js"></script>
 <script>
 
     var app = new Vue({
@@ -103,7 +103,7 @@
             now: new Date().getTime(),
             user: {
                 schoolId: "",
-                username: "201520180508",
+                username: "2943884288@qq.com",//"201520180508",
                 password: "553966",
                 email: "",
                 code: ""
@@ -133,7 +133,13 @@
                                 } else {
                                     showOK("登录成功！");
                                     saveSession("user", res.data.user);
-                                    location.replace("home.html");
+                                    if (res.data.user.kind >= 2) {
+                                        location.replace("index.html");
+                                    } else {
+                                        location.replace("home.html");
+
+                                    }
+
                                 }
                                 //clean data
                                 me.user.password = "";

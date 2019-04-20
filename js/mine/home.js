@@ -36,6 +36,7 @@ var app = new Vue({
                          icon: "./images/icon.jpg",
                          kind: 0,
                          username: "201520180508",
+                         realName: "Alice",
                          time: "2019-04-16 09:27:10",
                          location: "研一的门口",
                          title: "丢了一只篮球",
