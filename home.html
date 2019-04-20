@@ -226,7 +226,7 @@
                                                 <div v-for="(item, index) in category" class="item" :key="item.name">
                                                     <a @click="changeTab0Category(index)"
                                                        class="ui horizontal label"
-                                                       :class="{green: tab[0].search.category == item.name}">{{item.name}}</a>
+                                                       :class="{green: tab[0].search.category == item.name}">{{item.name}}&nbsp;{{item.count}}</a>
                                                 </div>
                                             </div>
                                         </div>

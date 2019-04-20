@@ -168,7 +168,7 @@ function showInfo(msg) {
 
 //绿色的勾
 function showOK(msg) {
-    layer.msg(msg, {icon: 1});
+    layer.msg(msg || "操作成功！", {icon: 1});
 }
 
 //红色叉叉

@@ -139,6 +139,7 @@ $(function () {
         }
     }
 });
+//冻结用户
 function freezeUser(userId){
     $.ajax({
         url: baseUrl + "/admin/freezeUser?userId=" + userId,
