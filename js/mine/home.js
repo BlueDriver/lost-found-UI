@@ -108,7 +108,8 @@ var app = new Vue({
         feedback: {
             subject: "",
             content: "",
-        }
+        },
+        icon: ""
     },
     methods: {
         showAllNotice(b) {
@@ -261,6 +262,10 @@ var app = new Vue({
                 //layer.close(index);
                 setPhone(phone);
             });
+        },
+        setIcon(){
+            app.showMenu = false;
+            $("#iconInput").click();
         }
     }
 });
@@ -270,6 +275,9 @@ $(function () {
 
     getNoticeList(app);
 });
+
+
+
 //设置手机号
 function setPhone(phone) {
     //console.log(data);
@@ -413,17 +421,73 @@ function getMessages(app) {
     });
 
 }
+//选择上传头像图片
+function changeIcon(obj) {
+    console.log('change img')
+    console.log(obj);
+    let file = obj.files[0];
+
+    //console.log(file);
+    console.log("file.size = " + file.size);  //file.size 单位为byte
+
+    let reader = new FileReader();
+
+    reader.onload = function (e) {
+        app.icon = this.result;
+        //app.tab4.images.push(e.target.result);
+        //或者 img.src = this.result;  //e.target == this
+    };
+    reader.readAsDataURL(file);
+
+    layer.open({
+        btn: ['确定', '取消'],
+        type: 1,
+        area: ['auto', 'auto'],
+        //shade: true,
+        title: "修改头像", //不显示标题
+        content: $('#iconDiv') //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+        , yes: function () {
+            setIcon(app.icon);
+        }, cancel: function () {
+            app.icon = "";
+        }
+    });
+}
+function setIcon(icon) {
+    $.ajax({
+        url: baseUrl + "/user/setIcon",
+        data: {icon: icon},
+        contentType: "application/x-www-form-urlencoded",
+        method: "POST",
+        success: function (res, status) {
+            console.log(res);
+            if (status == "success") {
+                if (res.success) {
+                    layer.closeAll();
+                    showOK();
+                    app.user.icon = res.data.icon;
+                    saveSession("user", app.user);
+                } else {
+                    showAlertError(res.msg)
+                }
+            } else {
+                console.log(res);
+                alert(res)
+            }
+        }
+    });
+}
 
 //选择上传图片
 function changeInput(obj) {
     console.log('change img')
     console.log(obj);
-    var file = obj.files[0];
+    let file = obj.files[0];
 
     //console.log(file);
     console.log("file.size = " + file.size);  //file.size 单位为byte
 
-    var reader = new FileReader();
+    let reader = new FileReader();
 
     //读取文件过程方法
     /* reader.onloadstart = function (e) {

@@ -101,15 +101,18 @@
                                             class="bars icon"></i></div>
                                     <div class="menu transition " tabindex="-1"
                                          :style="{display: showMenu?'block':'none'}">
+                                        <a class="item" @click="setIcon">
+                                            <i class="user circle icon"></i>修改头像
+                                        </a>
                                         <a class="item" @click="setPhone">
                                             <i class="mobile alternate icon"></i>设置手机号
                                         </a>
                                         <a class="item" @click="showFeedback">
                                             <i class="envelope icon"></i>反馈
                                         </a>
-                                        <a class="item ban">
+                                       <!-- <a class="item ban">
                                             <i class="flag  icon"></i>举报
-                                        </a>
+                                        </a>-->
                                     </div>
                                 </div>
                             </div>
@@ -257,7 +260,7 @@
                                                                 <a @click="jumpDetail(item.id)">
                                                                     <div class="osc-avatar small-portrait _35x35 avatar"
                                                                          :title="item.username">
-                                                                        <img :src="item.icon?item.icon:userIcon"
+                                                                        <img :src="item.icon?imgPrefix+item.icon:userIcon"
                                                                              alt="头像"
                                                                              :title="item.username">
                                                                     </div>
@@ -465,7 +468,7 @@
                                                                 <a @click="jumpDetail(item.id)">
                                                                     <div class="osc-avatar small-portrait _35x35 avatar"
                                                                          :title="item.username">
-                                                                        <img :src="item.icon?item.icon:userIcon"
+                                                                        <img :src="item.icon?imgPrefix+item.icon:userIcon"
                                                                              alt="头像"
                                                                              :title="item.username">
                                                                     </div>
@@ -566,7 +569,7 @@
                                                                 <a @click="jumpDetail(item.id)">
                                                                     <div class="osc-avatar small-portrait _35x35 avatar"
                                                                          :title="item.username">
-                                                                        <img :src="item.icon?item.icon:userIcon"
+                                                                        <img :src="item.icon?imgPrefix+item.icon:userIcon"
                                                                              alt="头像"
                                                                              :title="item.username">
                                                                     </div>
@@ -660,7 +663,7 @@
                                                 <div class="ui avatar image">
                                                     <a>
                                                         <div class="osc-avatar small-portrait _35x35">
-                                                            <img :src="item.icon?item.icon:userIcon">
+                                                            <img :src="item.icon?imgPrefix+item.icon:userIcon">
                                                         </div>
                                                     </a>
                                                 </div>
@@ -834,6 +837,7 @@
         </div>
     </div>
 
+    <!--反馈弹窗-->
     <div class="editor-wrapper" style="display: none; padding: 10px;" id="editorDiv">
         <div class="ui form" style="width: 100%; height: 100%;">
             <div class="field">
@@ -845,6 +849,12 @@
                           class="tweet-textarea disabled-resize"></textarea>
             </div>
         </div>
+    </div>
+
+    <div class="ui fluid image up-img" style="display: none; width: 24vw; height: 24vw !important; padding: 2vw;" id="iconDiv">
+        <input id="iconInput" type="file" accept="image/*"
+               onchange="changeIcon(this)">
+        <img :src="icon" style="width: 20vw; height: 20vw;">
     </div>
 
 </div>
