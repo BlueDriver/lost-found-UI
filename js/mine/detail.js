@@ -75,6 +75,16 @@ var app = new Vue({
         },
     },
     methods: {
+        share(){
+            console.log(location.href);
+            //捕获页
+            layer.open({
+                type: 1,
+                //shade: true,
+                title: "保存或扫描二维码", //不显示标题
+                content: $('#shareDiv') //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+            });
+        },
         viewImages(index) {
             //相册层
             this.images.data = [];
@@ -131,6 +141,7 @@ $(function () {
     } else {
         getDetail(id, app);
     }
+    var qrcode = new QRCode(document.getElementById("imgDiv"), location.href);
 });
 
 //删除招领信息
@@ -249,8 +260,10 @@ function getDetail(id, result) {
                     //console.log(result.item);
                     app.page.search.category = res.data.item.category;
                     console.log(app.page.search);
-                    getComments(result.item.id, app);
-                    pageLostFound(app.page.search, app.page);
+                    if (getSession('user')) {
+                        getComments(result.item.id, app);
+                        pageLostFound(app.page.search, app.page);
+                    }
                 } else {
                     showAlertError(res.msg)
                 }

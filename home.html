@@ -72,7 +72,7 @@
                                 <div class="avatar-wrap">
                                     <a class="ui small circular image avatar">
                                         <div class="osc-avatar large-portrait _120x120">
-                                            <img v-if="user.icon" :src="user.icon" :alt="user.realName"/>
+                                            <img v-if="user.icon" :src="imgPrefix+user.icon" :alt="user.realName"/>
                                             <div v-else style="height: 120px; width: 120px; font-size: 80px;
                                                 text-align: center; line-height: 80px; padding: 20px 0px;
                                              color: #fff;background-color: #3879d9; cursor: pointer;"
@@ -127,22 +127,29 @@
                             <div class="ui basic segment software-works sidebar-section">
                                 <h3 class="header">通知公告</h3>
                                 <div class="ui divided items">
-                                    <div class="item ">
-                                        <img class="ui avatar image"
-                                             src="./images/icon.jpg" alt="DLOG4J"
-                                             title="DLOG4J">
+                                    <div class="item" v-if="notice.length >0 && !noticeAll" @click="seeNotice(0)">
                                         <div class="content">
-                                            <a href="" target="_blank"
-                                               class="ui small header ">禁止打广告禁止打广告禁止打广告禁止打广告禁止打广告禁止打广告禁止打广告</a>
-                                            <div class="extra">Java多用户博客系统</div>
+                                            <a class="ui small header ">{{notice[0].title}}</a>
+                                            <div class="extra">{{notice[0].time}}</div>
                                         </div>
-                                        <!--<div class="ui basic label software-collect-btn" style="border:0" data-id="157" data-obj-type="1" data-user-id="12" data-favorited="$isFavorited">-->
-                                        <!--<span class="number">376</span>-->
-                                        <!--<i class="star icon  grey outline "></i>-->
-                                        <!--</div>-->
+                                        <div v-if="notice[0].fixTop==1" class="ui basic label software-collect-btn" style="border:0">
+                                            <!--<span class="number red">置顶</span>-->
+                                            <i class="thumbtack icon red"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item" v-else-if="notice.length >0" v-for="(item,index) in notice" :key="item.id"
+                                         @click="seeNotice(index)">
+                                        <div class="content">
+                                            <a class="ui small header ">{{item.title}}</a>
+                                            <div class="extra">{{item.time}}</div>
+                                        </div>
+                                        <div v-if="item.fixTop==1" class="ui basic label software-collect-btn" style="border:0">
+                                            <!--<span class="number">置顶</span>-->
+                                            <i class="thumbtack icon red"></i>
+                                        </div>
                                     </div>
 
-                                    <div class="item default-hide">
+                                  <!--  <div class="item default-hide">
                                         <img class="ui avatar image" src="" alt="Py3Cache" title="Py3Cache">
                                         <div class="content">
                                             <a href="" target="_blank"
@@ -155,10 +162,11 @@
                                             <span class="number">34</span>
                                             <i class="star icon  grey outline "></i>
                                         </div>
-                                    </div>
+                                    </div>-->
 
                                 </div>
-                                <div class="ui fluid button mini view-all-button">显示全部 8 个软件</div>
+                                <div v-if="!noticeAll" @click="showAllNotice(true)" class="ui fluid button mini view-all-button">显示全部 {{notice.length}} 个通知</div>
+                                <div v-else @click="showAllNotice(false)" class="ui fluid button mini view-all-button">收起全部通知</div>
                             </div>
 
                         </div>

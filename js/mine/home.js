@@ -94,9 +94,30 @@ var app = new Vue({
             about: "",
             location: null,
             images: [],//srcList
-        }
+        },
+        notice: [
+            {
+                id: "0000000001",
+                title: "every one notice",
+                content: "hello, thank u, thank u very much!",
+                time: "2019-04-21 18:45",
+                fixTop: 1,
+            }
+        ],
+        noticeAll: false
     },
     methods: {
+        showAllNotice(b){
+            this.noticeAll = b;
+        },
+        seeNotice(index){
+            let t = app.notice[index];
+            layer.open({
+                title: t.time+ "  " + t.title || "",
+                content: t.content || ""
+            });
+
+        },
         logout() {
             //询问框
             layer.confirm('确定要退出码？', {
@@ -217,6 +238,8 @@ var app = new Vue({
 
 $(function () {
     pageLostFound(app.tab[0].search, app.tab[0], true);
+
+    getNoticeList(app);
 });
 //删除招领信息
 function deletePub(data) {
@@ -241,6 +264,27 @@ function deletePub(data) {
 
 }
 
+//查询通知列表
+function getNoticeList(app) {
+    $.ajax({
+        url: baseUrl + "/common/noticeList",
+        //data: JSON.stringify(data),
+        method: "POST",
+        success: function (res, status) {
+            console.log(res);
+            if (status == "success") {
+                if (res.success) {
+                    app.notice = res.data.list;
+                } else {
+                    showAlertError(res.msg)
+                }
+            } else {
+                console.log(res);
+                alert(res)
+            }
+        }
+    });
+}
 
 //删除消息（评论）
 function removeComment(data) {
