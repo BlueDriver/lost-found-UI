@@ -8,7 +8,7 @@ $.ajaxSetup({
     contentType: "application/json;charset=UTF-8",
     xhrFields: {"withCredentials": true},//携带cookie
     beforeSend: function () {
-        showLoading();
+        //showLoading();
     },
     error: function (req, status, e) {
         hideLoading();

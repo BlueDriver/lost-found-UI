@@ -41,7 +41,7 @@
                                     <div class="item">
                                         <a>
                                             <div class="osc-avatar small-portrait _35x35 avatar">
-                                                <img :src="item.icon?item.icon:userIcon"
+                                                <img :src="item.icon?imgPrefix+item.icon:userIcon"
                                                      alt="头像"
                                                      :title="item.username"/>
                                             </div>
@@ -170,7 +170,7 @@
                                 <div class="label">
                                     <a>
                                         <div class="osc-avatar small-portrait _35x35">
-                                            <img :src="item.icon?item.icon:userIcon"/>
+                                            <img :src="item.icon?imgPrefix+item.icon:userIcon"/>
                                         </div>
                                     </a>
                                 </div>
@@ -221,7 +221,7 @@
                                 <div class="label">
                                     <a @click="jumpDetail(item.id)">
                                         <div class="osc-avatar small-portrait _35x35">
-                                            <img :src="item.icon?item.icon:userIcon"/>
+                                            <img :src="item.icon?imgPrefix+item.icon:userIcon"/>
                                         </div>
                                     </a>
                                 </div>
@@ -285,154 +285,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="event tweet-item">
-                                 <div class="label">
-                                     <a href="https://my.oschina.net/miaowua" title="仇诺伊啊" target="_blank">
-                                         <div class="osc-avatar small-portrait _35x35" title="仇诺伊啊"
-                                              data-user-id="3992994">
-                                             <img src="https://oscimg.oschina.net/oscnet/up-0i8t33i6vc9gyqe8i4un9tgkn6a736bo.jpg!/both/50x50?t=1554894949000"
-                                                  alt="仇诺伊啊" title="仇诺伊啊"/>
-                                         </div>
-                                     </a>
-                                 </div>
-                                 <div class="content content__sidebar">
-                                     <div class="tweet-user-info__sidebar">
-                                         <a class="user __user" href="https://my.oschina.net/miaowua" target="_blank">
-                                             <div class="ui red label horizontal"
-                                                  data-tooltip="正在寻找">
-                                                 寻物
-                                             </div>
-                                             &lt;!&ndash;<div class="ui blue label horizontal"&ndash;&gt;
-                                             &lt;!&ndash;data-tooltip="等待认领">&ndash;&gt;
-                                             &lt;!&ndash;认领&ndash;&gt;
-                                             &lt;!&ndash;</div>&ndash;&gt;
-                                             仇诺伊啊</a>
 
-                                         <div class="date">前天 19:25&nbsp;&nbsp;
-                                             <i class="map marker alternate icon"></i>
-                                             <span>江南大道</span>
-                                         </div>
-                                     </div>
-                                     <div class="extra text">
-                                         好像很久没逛osa了，小伙伴们，我胡汉三又回来啦
-                                     </div>
-
-
-                                     <div class="extra multi-image" data-optlog-id="19929938">
-                                         <div class="multimgs">
-                                             <div class="wrapper single-wrapper" data-multi-image-raw="item">
-                                                 <a href="https://my.oschina.net/miaowua/tweet/19929938" target="_blank">
-                                                     <img data-raw-img="https://oscimg.oschina.net/oscnet/up-8wtarw7wio1deuua3mmerluqb71ux5d9.jpg"
-                                                          data-big-img="https://oscimg.oschina.net/oscnet/up-8wtarw7wio1deuua3mmerluqb71ux5d9.jpg!/fp/500000"
-                                                          data-small-img="https://oscimg.oschina.net/oscnet/up-8wtarw7wio1deuua3mmerluqb71ux5d9.jpg!/sq/200"
-                                                          src="https://oscimg.oschina.net/oscnet/up-8wtarw7wio1deuua3mmerluqb71ux5d9.jpg!/sq/200"
-                                                          data-max-width="160" data-max-height="160" alt="图片">
-                                                 </a>
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div class="ui horizontal list">
-                                         <div class="item">
-                                             <span class="ui horizontal label">电子数码</span>
-                                         </div>
-                                     </div>
-                                     <div class="meta">
-                                         <a class="reply" href="https://my.oschina.net/miaowua/tweet/19929938"
-                                            target="_blank"><i class="comment outline icon"></i> <span
-                                                 data-tweet-reply-count data-tweet-id="19929938">167</span> 评论</a>
-                                         <a class="share"><i class="external icon"></i> <span data-tweet-ref-count
-                                                                                              data-tweet-id="19929938">3</span>
-                                             转发</a>
-
-                                     </div>
-                                 </div>
-                             </div>-->
                         </div>
                     </div>
                     <div class="section ad-wrap">
                     </div>
                 </div>
             </div>
-
-
-            <!--删除动弹/评论-->
-            <!-- <div class="ui mini delete-comment modal">
-                 <div class="header">删除一条评论</div>
-                 <div class="content">
-                     <p>评论删除后，数据将无法恢复</p>
-                 </div>
-                 <div class="actions">
-                     <div class="ui cancel button">取消</div>
-                     <div class="ui red ok button">确定</div>
-                 </div>
-             </div>
-
-             <div class="ui mini delete-tweet modal">
-                 <div class="header">删除动弹</div>
-                 <div class="content">
-                     <p>动弹删除后，数据将无法恢复</p>
-                 </div>
-                 <div class="actions">
-                     <div class="ui cancel button">取消</div>
-                     <div class="ui red ok button">确定</div>
-                 </div>
-             </div>-->
-
-
-            <!--转发动弹-->
-            <!-- <div class="ui tweet-share small modal" id="tweetShareForm">
-                 <i class="close icon"></i>
-                 <div class="header">
-                     转发动弹
-                 </div>
-                 <div class="content">
-                     <div class="ui form tweet-form" :class="{loading: tweetPublishLoading}">
-                         <div class="field">
-                 <textarea rows="4" placeholder="请输入转发理由"
-                           v-model.trim="tweetContent" :maxlength="tweetMaxLength"
-                           ref="tweetTextarea" class="tweet-textarea disabled-resize" :disabled="tweetPublishLoading"
-                           @keydown="tweetContentOnKeyDown"></textarea>
-                         </div>
-                         <div class="ui mini message hidden" :class="tipMessage.className"
-                              :style="{display: tipMessage.show ? 'block' : 'none'}">
-                 <span v-html="tipMessage.content">
-                         </div>
-                         <div class="field foot-bar">
-                             <div class="ui horizontal link small list toolbox">
-                                 <a class="item" data-popup="toolbox-emoji" ref="showEmojiBox"><i class="smile icon"></i>插入表情</a>
-                                 <div class="ui popup bottom left transition hidden toolbox-popup toolbox-emoji">
-                                     <div class="emoji-wrapper">
-                                         <div class="ui secondary pointing menu">
-                                             <a v-for="(emoji, index) in emojiList"
-                                                class="item" :class="{active: curEmojiType === emoji.type}"
-                                                @click="curEmojiType = emoji.type">{{ emoji.type }}</a>
-                                         </div>
-                                         <div class="emoji-list">
-                                             <div class="ui ten column padded grid">
-                                                 <div class="column" v-for="emojiItem in curEmojiItems">
-                                                     <div class="emoji-item" :title="emojiItem" :data-emoji="emojiItem"
-                                                          @click="insertEmoji(emojiItem)"></div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <a class="item" @click="insertTopic"><i class="hashtag icon"></i>插入话题</a>
-                             </div>
-                             <div class="count" v-text="tweetCountText"></div>
-                             <button class="ui primary right floated small button"
-                                     :class="{disabled: tweetContentIsEmpty}"
-                                     @click="publishTweet" :disabled="tweetPublishLoading">发布动弹
-                             </button>
-                         </div>
-                     </div>
-                 </div>
-             </div>-->
-            <!--<link rel="stylesheet" href="https://static.oschina.net/new-osc/js/utils/plugins/atwho/jquery.atwho.css">-->
-            <!--<script src="https://static.oschina.net/new-osc/js/utils/vue.min.js"></script>-->
-            <!--<script src="https://static.oschina.net/new-osc/js/utils/plugins/tiny-pinyin.min.js"></script>-->
-            <!--<script src="https://static.oschina.net/new-osc/js/utils/plugins/caret/jquery.caret.min.js"></script>-->
-            <!--<script src="https://static.oschina.net/new-osc/js/utils/plugins/atwho/jquery.atwho.min.js"></script>-->
 
         </div>
     </div>
