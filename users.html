@@ -50,10 +50,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
         a {
             cursor: pointer;
         }
+
+        td, th {
+            padding: 2px !important;
+        }
     </style>
 </head>
 <body class="cbp-spmenu-push">
-<div class="main-content">
+<div class="main-content" id="app">
     <!--left-fixed -navigation-->
     <div class=" sidebar" role="navigation">
         <div class="navbar-collapse">
@@ -69,7 +73,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 <a href="found.html">招领启事</a>
                             </li>
                             <li>
-                                <a href="category.html">类别管理<span class="nav-badge-btm">8</span></a>
+                                <a href="category.html">类别管理
+                                    <!--<span class="nav-badge-btm">8</span>-->
+                                </a>
                             </li>
                         </ul>
                         <!-- /nav-second-level -->
@@ -77,14 +83,16 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                     <li>
                         <a href="users.html"><i class="fa fa-users nav_icon"></i>用户管理</a>
                     </li>
-                    <li>
-                        <a href="campus.html"><i class="fa fa-university nav_icon"></i>校区管理</a>
-                    </li>
+                    <!--<li>-->
+                        <!--<a href="campus.html"><i class="fa fa-university nav_icon"></i>校区管理</a>-->
+                    <!--</li>-->
                     <li>
                         <a href="notice.html"><i class="fa fa-rss nav_icon"></i>&nbsp;公告管理</a>
                     </li>
                     <li>
-                        <a href="feedback.html"><i class="fa fa-envelope nav_icon"></i>反馈管理<span class="nav-badge-btm">08</span></a>
+                        <a href="feedback.html"><i class="fa fa-envelope nav_icon"></i>反馈管理
+                            <!--<span class="nav-badge-btm">08</span>-->
+                        </a>
                         <!-- //nav-second-level -->
                     </li>
                     <!--<li>
@@ -142,140 +150,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
             <div class="clearfix"></div>
         </div>
         <div class="header-right">
-            <!--<div class="profile_details_left">&lt;!&ndash;notifications of menu start &ndash;&gt;
-                <ul class="nofitications-dropdown">
-                    <li class="dropdown head-dpdn">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">3</span></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <div class="notification_header">
-                                    <h3>You have 3 new messages</h3>
-                                </div>
-                            </li>
-                            <li><a href="#">
-                               <div class="user_img"><img src="images/1.png" alt=""></div>
-                               <div class="notification_desc">
-                                <p>Lorem ipsum dolor amet</p>
-                                <p><span>1 hour ago</span></p>
-                                </div>
-                               <div class="clearfix"></div>
-                            </a></li>
-                            <li class="odd"><a href="#">
-                                <div class="user_img"><img src="images/2.png" alt=""></div>
-                               <div class="notification_desc">
-                                <p>Lorem ipsum dolor amet </p>
-                                <p><span>1 hour ago</span></p>
-                                </div>
-                              <div class="clearfix"></div>
-                            </a></li>
-                            <li><a href="#">
-                               <div class="user_img"><img src="images/3.png" alt=""></div>
-                               <div class="notification_desc">
-                                <p>Lorem ipsum dolor amet </p>
-                                <p><span>1 hour ago</span></p>
-                                </div>
-                               <div class="clearfix"></div>
-                            </a></li>
-                            <li>
-                                <div class="notification_bottom">
-                                    <a href="#">See all messages</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown head-dpdn">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue">3</span></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <div class="notification_header">
-                                    <h3>You have 3 new notification</h3>
-                                </div>
-                            </li>
-                            <li><a href="#">
-                                <div class="user_img"><img src="images/2.png" alt=""></div>
-                               <div class="notification_desc">
-                                <p>Lorem ipsum dolor amet</p>
-                                <p><span>1 hour ago</span></p>
-                                </div>
-                              <div class="clearfix"></div>
-                             </a></li>
-                             <li class="odd"><a href="#">
-                                <div class="user_img"><img src="images/1.png" alt=""></div>
-                               <div class="notification_desc">
-                                <p>Lorem ipsum dolor amet </p>
-                                <p><span>1 hour ago</span></p>
-                                </div>
-                               <div class="clearfix"></div>
-                             </a></li>
-                             <li><a href="#">
-                                <div class="user_img"><img src="images/3.png" alt=""></div>
-                               <div class="notification_desc">
-                                <p>Lorem ipsum dolor amet </p>
-                                <p><span>1 hour ago</span></p>
-                                </div>
-                               <div class="clearfix"></div>
-                             </a></li>
-                             <li>
-                                <div class="notification_bottom">
-                                    <a href="#">See all notifications</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown head-dpdn">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-tasks"></i><span class="badge blue1">15</span></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <div class="notification_header">
-                                    <h3>You have 8 pending task</h3>
-                                </div>
-                            </li>
-                            <li><a href="#">
-                                <div class="task-info">
-                                    <span class="task-desc">Database update</span><span class="percentage">40%</span>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="progress progress-striped active">
-                                    <div class="bar yellow" style="width:40%;"></div>
-                                </div>
-                            </a></li>
-                            <li><a href="#">
-                                <div class="task-info">
-                                    <span class="task-desc">Dashboard done</span><span class="percentage">90%</span>
-                                   <div class="clearfix"></div>
-                                </div>
-                                <div class="progress progress-striped active">
-                                     <div class="bar green" style="width:90%;"></div>
-                                </div>
-                            </a></li>
-                            <li><a href="#">
-                                <div class="task-info">
-                                    <span class="task-desc">Mobile App</span><span class="percentage">33%</span>
-                                    <div class="clearfix"></div>
-                                </div>
-                               <div class="progress progress-striped active">
-                                     <div class="bar red" style="width: 33%;"></div>
-                                </div>
-                            </a></li>
-                            <li><a href="#">
-                                <div class="task-info">
-                                    <span class="task-desc">Issues fixed</span><span class="percentage">80%</span>
-                                   <div class="clearfix"></div>
-                                </div>
-                                <div class="progress progress-striped active">
-                                     <div class="bar  blue" style="width: 80%;"></div>
-                                </div>
-                            </a></li>
-                            <li>
-                                <div class="notification_bottom">
-                                    <a href="#">See all pending tasks</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="clearfix"> </div>
-            </div>-->
             <!--notification menu end -->
             <div class="profile_details">
                 <ul>
@@ -283,12 +157,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <div class="profile_img">
 									<span class="prfil-img">
-										<img src="images/ecut_logo.jpg" style="max-width: 50px; max-height: 50px;"
-                                             alt="">
+										<img :src="user.icon?imgPrefix+user.icon:schoolIcon"
+                                             style="max-width: 50px; max-height: 50px;">
 									</span>
                                 <div class="user-name">
-                                    <p>东华理工大学</p>
-                                    <span>cpwu@foxmail.com</span>
+                                    <p>{{user.schoolName}}</p>
+                                    <span>{{user.email}}</span>
                                 </div>
                                 <i class="fa fa-angle-down lnr"></i>
                                 <i class="fa fa-angle-up lnr"></i>
@@ -296,9 +170,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </div>
                         </a>
                         <ul class="dropdown-menu drp-mnu">
-                            <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                            <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
-                            <li><a href="#"><i class="fa fa-sign-out"></i>退出</a></li>
+                            <!--<li><a ><i class="fa fa-cog"></i> Settings</a></li>-->
+                            <!--<li><a ><i class="fa fa-user"></i> Profile</a></li>-->
+                            <li><a @click="logout"><i class="fa fa-sign-out"></i>退出</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -314,17 +188,17 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
             <div class="col-md-12">
                 <div class="col-md-offset-6 col-lg-6" style="padding: 0px 0px 20px 0px;">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
+                        <input type="text" class="form-control" placeholder="关键字" v-model="search.keyword">
                         <span class="input-group-btn">
-                                <button class="btn btn-primary" type="button">搜索</button>
+                                <button class="btn btn-primary" type="button" @click="submit">搜索</button>
                               </span>
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
 
             </div>
             <div class="tables col-md-12">
-                <div class="bs-example widget-shadow" style="margin-top: 0px;" >
-                    <table class="table" >
+                <div class="bs-example widget-shadow" style="margin-top: 0px;">
+                    <table class="table table-bordered table-hover table-condensed">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -332,10 +206,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             <th>姓名</th>
                             <th>性别</th>
                             <th>专业</th>
+                            <th>班级</th>
                             <th>学院</th>
                             <th>校区</th>
                             <th>邮箱</th>
                             <th>手机</th>
+                            <td>最近登录</td>
                             <th>状态</th>
                             <th>
                                 <span class="glyphicon glyphicon-th-list"></span>
@@ -343,17 +219,22 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>201520180508</td>
-                            <td>无船平</td>
-                            <td>男</td>
-                            <td> 软件工程</td>
-                            <td>软件学院</td>
-                            <td>广兰校区</td>
-                            <td>cpwu@foxmail.com</td>
-                            <td>15912345678</td>
-                            <td><span class="label-success label">正常</span></td>
+                        <tr v-for="(item, index) in result.list">
+                            <th scope="row">{{index+1}}</th>
+                            <td>{{item.username}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.gender}}</td>
+                            <td>{{item.major}}</td>
+                            <td>{{item.classNum}}</td>
+                            <td>{{item.academy}}</td>
+                            <td>{{item.campus}}</td>
+                            <td>{{item.email}}</td>
+                            <td>{{item.phoneNumber}}</td>
+                            <td>{{item.lastLogin}}</td>
+                            <td>
+                                <span v-if="item.status=='正常'" class="label-success label">{{item.status}}</span>
+                                <span v-else class="label-danger label">{{item.status}}</span>
+                            </td>
                             <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default btn-xs dropdown-toggle"
@@ -361,10 +242,11 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                         <span class="glyphicon glyphicon-menu-hamburger"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <!--<li role="separator" class="divider"></li>-->
-                                        <li><a href="#">修改信息</a></li>
-                                        <li><a href="#">冻结账号</a></li>
-                                        <li><a href="#">删除账号</a></li>
+                                        <li><a  @click="freezeUser(item.userId)">冻结账号</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a  @click="unfreezeUser(item.userId)">解冻账号</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a  @click="setAsManager(item.userId)">设为管理员</a></li>
                                         <!--<li><a href="#"></a></li>-->
                                     </ul>
                                 </div>
@@ -373,6 +255,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 
                         </tbody>
                     </table>
+                    <p v-if="result.list.length == 0" class="text-center">无内容</p>
                 </div>
             </div>
             <div class="row">
@@ -380,28 +263,31 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                 <div class="col-md-7">
                     <nav style="float: right;">
                         <ul class="pagination">
-                            <li><a href="#">首页</a></li>
-                            <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a>
+                            <li><a @click="toPage(0)">首页</a></li>
+                            <li :class="{disabled: search.pageNum==0}">
+                                <a @click="toPage(search.pageNum-1)" aria-label="Previous">
+                                    <span aria-hidden="true">«</span></a>
                             </li>
-                            <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                            <li><a href="#">末页</a></li>
+                            <li v-for="num in result.totalPage" :class="{active: num==currentPage}">
+                                <a @click="toPage(num-1)">{{num}}</a>
+                            </li>
+                            <li :class="{disabled: search.pageNum>=result.totalPage - 1}">
+                                <a @click="toPage(search.pageNum+1)"
+                                   aria-label="Next"><span aria-hidden="true">»</span></a>
+                            </li>
+                            <li><a @click="toPage(result.totalPage-1)">末页</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-md-5">
                     <div class="input-group" style="margin: 20px 10px;">
-                        <span class="input-group-addon" id="sizing-addon1">共234条，每页</span>
-                        <input type="text" class="form-control" value="20">
+                        <span class="input-group-addon" id="sizing-addon1">共{{result.total}}条，每页</span>
+                        <input type="text" class="form-control" v-model="search.pageSize">
                         <span class="input-group-addon" id="sizing-addon2">条，第</span>
-                        <input type="text" class="form-control" value="1">
-                        <span class="input-group-addon" id="sizing-addon3">/3页</span>
+                        <input type="text" class="form-control" :value="currentPage" id="pgNum">
+                        <span class="input-group-addon" id="sizing-addon3">/{{result.totalPage}}页</span>
                         <span class="input-group-btn" style="width: auto;">
-                                <button class="btn btn-primary" type="button">确定</button>
+                                <button class="btn btn-primary" type="button" @click="submit">确定</button>
                             </span>
                     </div>
                 </div>
@@ -418,29 +304,16 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 </div>
 <!-- Classie -->
 <script src="js/classie.js"></script>
-<script>
-    var menuLeft = document.getElementById('cbp-spmenu-s1'),
-        showLeftPush = document.getElementById('showLeftPush'),
-        body = document.body;
-
-    showLeftPush.onclick = function () {
-        classie.toggle(this, 'active');
-        classie.toggle(body, 'cbp-spmenu-push-toright');
-        classie.toggle(menuLeft, 'cbp-spmenu-open');
-        disableOther('showLeftPush');
-    };
-
-    function disableOther(button) {
-        if (button !== 'showLeftPush') {
-            classie.toggle(showLeftPush, 'disabled');
-        }
-    }
-</script>
 <!--scrolling js-->
 <script src="js/jquery.nicescroll.js"></script>
 <script src="js/scripts.js"></script>
 <!--//scrolling js-->
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.js"></script>
+<script src="js/vue.js"></script>
+<script src="./js/layer.js"></script>
+<script src="js/mine/common.js"></script>
+<script src="js/mine/users.js"></script>
+
 </body>
 </html>

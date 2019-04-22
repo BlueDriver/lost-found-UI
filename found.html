@@ -50,6 +50,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
         a {
             cursor: pointer;
         }
+        td,th{
+            padding: 2px !important;
+        }
     </style>
 </head>
 <body class="cbp-spmenu-push">
@@ -69,7 +72,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 <a href="found.html">招领启事</a>
                             </li>
                             <li>
-                                <a href="category.html">类别管理<span class="nav-badge-btm">8</span></a>
+                                <a href="category.html">类别管理
+                                    <!--<span class="nav-badge-btm">8</span>-->
+                                </a>
                             </li>
                         </ul>
                         <!-- /nav-second-level -->
@@ -77,14 +82,16 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                     <li>
                         <a href="users.html"><i class="fa fa-users nav_icon"></i>用户管理</a>
                     </li>
-                    <li>
-                        <a href="campus.html"><i class="fa fa-university nav_icon"></i>校区管理</a>
-                    </li>
+                    <!--<li>-->
+                        <!--<a href="campus.html"><i class="fa fa-university nav_icon"></i>校区管理</a>-->
+                    <!--</li>-->
                     <li>
                         <a href="notice.html"><i class="fa fa-rss nav_icon"></i>&nbsp;公告管理</a>
                     </li>
                     <li>
-                        <a href="feedback.html"><i class="fa fa-envelope nav_icon"></i>反馈管理<span class="nav-badge-btm">08</span></a>
+                        <a href="feedback.html"><i class="fa fa-envelope nav_icon"></i>反馈管理
+                            <!--<span class="nav-badge-btm">08</span>-->
+                        </a>
                         <!-- //nav-second-level -->
                     </li>
 
@@ -258,7 +265,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             <!--<li><a href="#">3</a></li>-->
                             <!--<li><a href="#">4</a></li>-->
                             <!--<li><a href="#">5</a></li>-->
-                            <li :class="{disabled: result.search.pageNum==result.totalPage - 1}">
+                            <li :class="{disabled: result.search.pageNum>=result.totalPage - 1}">
                                 <a @click="toPage(result.search.pageNum+1)" aria-label="Next"><span
                                         aria-hidden="true">»</span>
                                 </a>

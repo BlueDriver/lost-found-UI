@@ -33,6 +33,7 @@ var app = new Vue({
             ]
         },
         userInfo: {
+            userId: "001",
             name: "Alice",
             username: "201520180508",
             gender: "male",
