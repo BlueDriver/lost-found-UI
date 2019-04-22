@@ -104,16 +104,20 @@ var app = new Vue({
                 fixTop: 1,
             }
         ],
-        noticeAll: false
+        noticeAll: false,
+        feedback: {
+            subject: "",
+            content: "",
+        }
     },
     methods: {
-        showAllNotice(b){
+        showAllNotice(b) {
             this.noticeAll = b;
         },
-        seeNotice(index){
+        seeNotice(index) {
             let t = app.notice[index];
             layer.open({
-                title: t.time+ "  " + t.title || "",
+                title: t.time + "  " + t.title || "",
                 content: t.content || ""
             });
 
@@ -189,7 +193,7 @@ var app = new Vue({
             });
 
         },
-        removeComment(id){
+        removeComment(id) {
             console.log(id);
             layer.confirm('确定要删除码？', {
                 btn: ['确定', '取消'] //按钮
@@ -232,6 +236,31 @@ var app = new Vue({
         jumpDetail(id) {
             //跳转详情页面
             window.open("./detail.html?id=" + id, "_self");
+        },
+        showFeedback() {
+            app.showMenu = false;
+            layer.open({
+                btn: ['确定', '取消'],
+                type: 1,
+                area: ['50vw', 'auto'],
+                //shade: true,
+                title: "反馈", //不显示标题
+                content: $('#editorDiv') //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                , yes: function () {
+                    console.log(app.feedback);
+                    pubFeedback(app.feedback);
+                }, cancel: function () {
+
+                }
+            });
+        },
+        setPhone(){
+            app.showMenu = false;
+            layer.prompt({title: '请输入手机号码：'}, function(phone, index){
+                showOK(phone);
+                //layer.close(index);
+                setPhone(phone);
+            });
         }
     }
 });
@@ -241,6 +270,60 @@ $(function () {
 
     getNoticeList(app);
 });
+//设置手机号
+function setPhone(phone) {
+    //console.log(data);
+    $.ajax({
+        url: baseUrl + "/user/setPhone?phone=" + phone,
+        //data: JSON.stringify(data),
+        method: "POST",
+        success: function (res, status) {
+            console.log(res);
+            if (status == "success") {
+                if (res.success) {
+                    layer.closeAll();
+                    showOK();
+                    app.user.phoneNumber = res.data.phone;
+                    saveSession("user", app.user);
+                } else {
+                    showAlertError(res.msg)
+                }
+            } else {
+                console.log(res);
+                alert(res)
+            }
+        }
+    });
+}
+
+//新增反馈
+function pubFeedback(data) {
+    console.log(data);
+    $.ajax({
+        url: baseUrl + "/user/addFeedback",
+        data: JSON.stringify(data),
+        method: "POST",
+        success: function (res, status) {
+            console.log(res);
+            if (status == "success") {
+                if (res.success) {
+                    layer.closeAll();
+                    showOK();
+                    app.feedback = {
+                        subject: "",
+                        content: ""
+                    }
+                } else {
+                    showAlertError(res.msg)
+                }
+            } else {
+                console.log(res);
+                alert(res)
+            }
+        }
+    });
+}
+
 //删除招领信息
 function deletePub(data) {
     $.ajax({
