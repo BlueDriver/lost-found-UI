@@ -105,14 +105,17 @@
                                             <i class="user circle icon"></i>修改头像
                                         </a>
                                         <a class="item" @click="setPhone">
-                                            <i class="mobile alternate icon"></i>设置手机号
+                                            <i class="mobile alternate icon"></i>修改手机
+                                        </a>
+                                        <a class="item" @click="setPhone">
+                                            <i class="lock alternate icon"></i>修改密码
                                         </a>
                                         <a class="item" @click="showFeedback">
                                             <i class="envelope icon"></i>反馈
                                         </a>
-                                       <!-- <a class="item ban">
-                                            <i class="flag  icon"></i>举报
-                                        </a>-->
+                                        <a class="item ban">
+                                            <i class="info circle icon"></i>关于
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -360,104 +363,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--<div class="ui feed tweet-item item blog-item">
-                                            <div class="event">
-                                                <div class="content">
-                                                    <div class="ui items tweet-user-info">
-                                                        <div class="item">
-                                                            <a href="https://my.oschina.net/liwenhoho" target="_blank">
-                                                                <div class="osc-avatar small-portrait _35x35 avatar"
-                                                                     title="会编程的花栗鼠">
-                                                                    <img src="./images/icon.jpg"
-                                                                         alt="会编程的花栗鼠" title="会编程的花栗鼠">
-                                                                </div>
-                                                            </a>
-                                                            <div class="content">
-                                                                <a class="user __user"
-                                                                   href="https://my.oschina.net/liwenhoho"
-                                                                   target="_blank">
-                                                                    <div class="ui red label horizontal"
-                                                                         data-tooltip="寻找">
-                                                                        寻找
-                                                                    </div>
-                                                                    会编程的花栗鼠</a>
 
-                                                                <div class="extra">
-                                                                    <div class="date">2016/12/26 04:44&nbsp;&nbsp;<i
-                                                                            class="map marker alternate icon"></i>
-                                                                        <span data-tweet-id="19932613">图书馆的地方</span>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="extra text" data-emoji-render="">
-                                                        我TM就知道，喵星人并不简单！喵星人并不简单！喵星人并不简单！喵星人并不简单！喵星人并不简单！
-                                                    </div>
-                                                    <div class="extra multi-image" data-optlog-id="19932613">
-                                                        <div class="multimgs">
-                                                            <div class="wrapper single-wrapper"
-                                                                 data-multi-image-raw="item">
-                                                                <a href="https://my.oschina.net/liwenhoho/tweet/19932613"
-                                                                   target="_blank">
-                                                                    <img data-raw-img=""
-                                                                         data-big-img="https://oscimg.oschina.net/oscnet/up-65b424a96a8bccb1a5276d2e57f2ad1a.jpg!/fp/500000"
-                                                                         data-small-img="https://oscimg.oschina.net/oscnet/up-65b424a96a8bccb1a5276d2e57f2ad1a.jpg!/sq/200"
-                                                                         src="http://www.swzl.com/upload/34bcde819ee2469086296450c05f659b.jpg"
-                                                                         data-max-width="160" data-max-height="160"
-                                                                         alt="图片"
-                                                                         style="max-width: 160px; height: auto;">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="ui horizontal list">
-                                                        <div class="item">
-                                                            <a class="ui horizontal label"
-                                                               href="https://my.oschina.net/MStart?q=">安卓</a>
-                                                        </div>
-                                                        <div class="item">
-                                                            <a class="ui horizontal label"
-                                                               href="https://my.oschina.net/MStart?q=">手机</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="meta">
-                                                        <a class="like " data-tweet-like-btn=""
-                                                           data-tweet-id="19932613">
-                                                            <i class="eye    icon"></i>
-                                                            <span data-tweet-like-count=""
-                                                                  data-tweet-id="19932613">2</span>
-                                                        </a>
-                                                        <a class="reply"
-                                                           href="https://my.oschina.net/liwenhoho/tweet/19932613#comments"
-                                                           target="_blank">
-                                                            <i class="comment outline icon"></i> <span>1</span> 评论
-                                                        </a>
-                                                        <a class="share">
-                                                            <i class="external icon"></i> <span data-tweet-ref-count=""
-                                                                                                data-tweet-id="19932613">转发</span>
-                                                        </a>
-                                                        <a class="view"
-                                                           href="https://my.oschina.net/liwenhoho/tweet/19932613"
-                                                           target="_blank">查看详情</a>
-                                                        <div class="right">
-                                                            <a class="ban" ban-report="" data-id="19932613"
-                                                               data-obj-type="100"
-                                                               data-url="https://my.oschina.net/liwenhoho/tweet/19932613">
-                                                                <i class="ban icon"></i> 举报
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ui basic segment article-list">
-                                            <div class="ui center aligned basic segment">
-                                                <img src="./images/empty.png">
-                                                <h4 class="ui sub header grey">无内容</h4>
-                                            </div>
-                                        </div>-->
                                         <block v-if="tab[1].list.length > 0">
                                             <div v-for="item in tab[1].list" class="ui feed tweet-item item blog-item"
                                                  :key="item.id">
