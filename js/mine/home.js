@@ -343,6 +343,7 @@ function deletePub(data) {
             if (status == "success") {
                 if (res.success) {
                     pageLostFound(app.tab[2].search, app.tab[2], false);
+                    layer.closeAll();
                 } else {
                     showAlertError(res.msg)
                 }
