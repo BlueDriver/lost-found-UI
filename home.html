@@ -34,10 +34,6 @@
             padding-top: 10px;
         }
 
-        span:.item {
-            cusor: pointer;
-        }
-
         @media only screen and (max-width: 767px) {
             .article-list .image {
                 display: inline-block !important;
@@ -579,7 +575,7 @@
 
                                                     </div>
                                                     <div class="description summary" data-emoji-render="">
-                                                        评论了：<a class="user">{{item.title}}</a>
+                                                        评论了：<a class="user" :href="'detail.html?id='+item.lostFoundId">{{item.title}}</a>
                                                     </div>
                                                     <div class="extra referer">
                                                         <div class="referer-wrapper">
@@ -757,7 +753,8 @@
         </div>
     </div>
 
-    <div class="ui fluid image up-img" style="display: none; width: 24vw; height: 24vw !important; padding: 2vw;" id="iconDiv">
+    <div class="ui fluid image up-img" style="display: none; width: 24vw; height: 24vw !important; padding: 2vw;"
+         id="iconDiv">
         <input id="iconInput" type="file" accept="image/*"
                onchange="changeIcon(this)">
         <img :src="icon" style="width: 20vw; height: 20vw;">
