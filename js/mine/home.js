@@ -109,7 +109,12 @@ var app = new Vue({
             subject: "",
             content: "",
         },
-        icon: ""
+        icon: "",
+        password: {
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: ""
+        }
     },
     methods: {
         showAllNotice(b) {
@@ -124,6 +129,7 @@ var app = new Vue({
 
         },
         logout() {
+            app.showMenu = false;
             //询问框
             layer.confirm('确定要退出码？', {
                 btn: ['确定', '取消'] //按钮
@@ -255,17 +261,48 @@ var app = new Vue({
                 }
             });
         },
-        setPhone(){
+        setPassword() {
             app.showMenu = false;
-            layer.prompt({title: '请输入手机号码：'}, function(phone, index){
+            layer.open({
+                btn: ['确定'],
+                type: 1,
+                area: ['300px', 'auto'],
+                //shade: true,
+                title: "修改密码", //不显示标题
+                content: $('#pwdDiv'),  //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                yes: function () {
+                    console.log(app.password);
+                    let pwd = app.password;
+                    if (pwd.newPassword != pwd.confirmPassword) {
+                        showAlertError("新密码不一致！");
+                        return;
+                    }
+                    setPassword(app.password);
+                },
+                cancel: function () {
+                    app.password = {
+                        oldPassword: "",
+                        newPassword: "",
+                        confirmPassword: ""
+                    }
+                }
+            });
+        },
+        setPhone() {
+            app.showMenu = false;
+            layer.prompt({title: '请输入手机号码：'}, function (phone, index) {
                 showOK(phone);
                 //layer.close(index);
                 setPhone(phone);
             });
         },
-        setIcon(){
+        setIcon() {
             app.showMenu = false;
             $("#iconInput").click();
+        },
+        showAbout() {
+            app.showMenu = false;
+            showAlert("ECUT失物招领系统", "关于");
         }
     }
 });
@@ -275,7 +312,6 @@ $(function () {
 
     getNoticeList(app);
 });
-
 
 
 //设置手机号
@@ -320,6 +356,35 @@ function pubFeedback(data) {
                     app.feedback = {
                         subject: "",
                         content: ""
+                    }
+                } else {
+                    showAlertError(res.msg)
+                }
+            } else {
+                console.log(res);
+                alert(res)
+            }
+        }
+    });
+}
+
+//修改密码
+function setPassword(data) {
+    console.log(data);
+    $.ajax({
+        url: baseUrl + "/user/setPassword",
+        data: JSON.stringify(data),
+        method: "POST",
+        success: function (res, status) {
+            console.log(res);
+            if (status == "success") {
+                if (res.success) {
+                    layer.closeAll();
+                    showOK();
+                    app.password = {
+                        oldPassword: "",
+                        newPassword: "",
+                        confirmPassword: ""
                     }
                 } else {
                     showAlertError(res.msg)
@@ -422,6 +487,7 @@ function getMessages(app) {
     });
 
 }
+
 //选择上传头像图片
 function changeIcon(obj) {
     console.log('change img')
@@ -454,6 +520,7 @@ function changeIcon(obj) {
         }
     });
 }
+
 function setIcon(icon) {
     $.ajax({
         url: baseUrl + "/user/setIcon",

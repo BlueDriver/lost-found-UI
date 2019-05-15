@@ -103,13 +103,13 @@
                                         <a class="item" @click="setPhone">
                                             <i class="mobile alternate icon"></i>修改手机
                                         </a>
-                                        <a class="item" @click="setPhone">
+                                        <a class="item" @click="setPassword">
                                             <i class="lock alternate icon"></i>修改密码
                                         </a>
                                         <a class="item" @click="showFeedback">
                                             <i class="envelope icon"></i>反馈
                                         </a>
-                                        <a class="item">
+                                        <a class="item" @click="showAbout">
                                             <i class="info circle icon"></i>关于
                                         </a>
                                     </div>
@@ -729,7 +729,7 @@
         <div class="ui form" style="width: 100%; height: 100%;">
             <div class="field">
                 <input v-model="feedback.subject" placeholder="主题" maxlength="256"
-                       class="tweet-textarea disabled-resize"/>
+                       class="tweet-textarea disabled-resize" autofocus/>
             </div>
             <div class="field">
                 <textarea v-model="feedback.content" rows="5" placeholder="详情" maxlength="1024"
@@ -738,6 +738,25 @@
         </div>
     </div>
 
+    <!--修改密码-->
+    <div class="editor-wrapper" style="display: none; padding: 10px;" id="pwdDiv">
+        <div class="ui form" style="width: 100%; height: 100%;">
+            <div class="field">
+                <input v-model="password.oldPassword" placeholder="旧密码" maxlength="256" type="password"
+                       class="tweet-textarea disabled-resize" autofocus/>
+            </div>
+            <div class="field">
+                <input v-model="password.newPassword" placeholder="新密码" maxlength="256" type="password"
+                       class="tweet-textarea disabled-resize"/>
+            </div>
+            <div class="field">
+                <input v-model="password.confirmPassword" placeholder="确认新密码" maxlength="256" type="password"
+                       class="tweet-textarea disabled-resize"/>
+            </div>
+        </div>
+    </div>
+
+    <!--修改头像-->
     <div class="ui fluid image up-img" style="display: none; width: 24vw; height: 24vw !important; padding: 2vw;"
          id="iconDiv">
         <input id="iconInput" type="file" accept="image/*"
