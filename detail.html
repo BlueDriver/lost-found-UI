@@ -133,6 +133,10 @@
                             </div>
                         </div>
                     </div>
+                    <div v-if="!item.isSelf && item.kind == 1" class="field foot-bar" style="text-align: center;">
+                        <button class="ui blue small button" @click="claim">我要认领
+                        </button>
+                    </div>
                     <!--comment-->
                     <h3 class="ui header" id="comments">评论</h3>
                     <div class="" id="tweetCommentForm">
@@ -140,9 +144,8 @@
                         <div class="ui form tweet-form">
                             <div class="field">
                     <textarea v-model="comment" rows="4" placeholder="我有话要说"
-                              maxlength="256" class="tweet-comment-textarea disabled-resize"
-
-                    ></textarea>
+                              maxlength="256" class="tweet-comment-textarea disabled-resize">
+                    </textarea>
                             </div>
                             <div class="field foot-bar">
                                 <div class="ui horizontal link small list toolbox">

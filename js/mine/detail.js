@@ -130,6 +130,9 @@ var app = new Vue({
         jumpDetail(id) {
             //跳转详情页面
             window.open("./detail.html?id=" + id, "_self");
+        },
+        claim(){
+            claim(this.item.id);
         }
     }
 });
@@ -264,6 +267,27 @@ function getDetail(id, result) {
                         getComments(result.item.id, app);
                         pageLostFound(app.page.search, app.page);
                     }
+                } else {
+                    showAlertError(res.msg)
+                }
+            } else {
+                console.log(res);
+                alert(res)
+            }
+        }
+    });
+}
+
+//认领物品
+function claim(id) {
+    $.ajax({
+        url: baseUrl + "/user/claim?id=" + id,
+        method: "POST",
+        success: function (res, status) {
+            console.log(res);
+            if (status == "success") {
+                if (res.success) {
+                    showAlert("认领成功！");
                 } else {
                     showAlertError(res.msg)
                 }
