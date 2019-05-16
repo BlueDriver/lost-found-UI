@@ -20,6 +20,7 @@ var app = new Vue({
                       id: "00000000000000001",
                       icon: "./images/icon.jpg",
                       kind: 0,
+                      status: 1,
                       username: "201520180508",
                       realName: "Alice",
                       time: "2019-04-16 09:27:10",
