@@ -84,7 +84,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         <a href="users.html"><i class="fa fa-users nav_icon"></i>用户管理</a>
                     </li>
                     <!--<li>-->
-                        <!--<a href="campus.html"><i class="fa fa-university nav_icon"></i>校区管理</a>-->
+                    <!--<a href="campus.html"><i class="fa fa-university nav_icon"></i>校区管理</a>-->
                     <!--</li>-->
                     <li>
                         <a href="notice.html"><i class="fa fa-rss nav_icon"></i>&nbsp;公告管理</a>
@@ -222,7 +222,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         <tr v-for="(item, index) in result.list">
                             <th scope="row">{{index+1}}</th>
                             <td>{{item.username}}</td>
-                            <td>{{item.name}}</td>
+                            <td>{{item.name}}&nbsp;<span v-if="item.kind==2" class="glyphicon glyphicon-user text-primary" title="管理员"></span></td>
                             <td>{{item.gender}}</td>
                             <td>{{item.major}}</td>
                             <td>{{item.classNum}}</td>
@@ -242,13 +242,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                         <span class="glyphicon glyphicon-menu-hamburger"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a  @click="resetPassword(item.userId)">重置密码</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a  @click="freezeUser(item.userId)">冻结账号</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a  @click="unfreezeUser(item.userId)">解冻账号</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a  @click="setAsManager(item.userId)">设为管理员</a></li>
+                                        <li><a @click="resetPassword(item.userId)">重置密码</a></li>
+                                        <!--<li role="separator" class="divider"></li>-->
+                                        <li v-if="item.status=='正常'"><a @click="freezeUser(item.userId)">冻结账号</a></li>
+                                        <!--<li role="separator" class="divider"></li>-->
+                                        <li v-else><a @click="unfreezeUser(item.userId)">解冻账号</a></li>
+                                        <!--<li role="separator" class="divider"></li>-->
+                                        <li v-if="item.kind<2"><a @click="setAsManager(item.userId, 1)">添加为管理员</a></li>
+                                        <li v-else><a @click="setAsManager(item.userId, 0)">移除该管理员</a></li>
                                         <!--<li><a href="#"></a></li>-->
                                     </ul>
                                 </div>

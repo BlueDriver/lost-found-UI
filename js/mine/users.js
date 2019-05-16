@@ -25,7 +25,8 @@ var app = new Vue({
                     academy: "soft academy",
                     campus: "gl",
                     lastLogin: "2019-4-20 13:00",
-                    status: "正常"
+                    status: "正常",
+                    kind: 0
                 }*/
             ]
         }
@@ -67,11 +68,11 @@ var app = new Vue({
 
             });
         },
-        setAsManager(userId) {
+        setAsManager(userId, flag) {
             layer.confirm('设置为管理员的账号可登录后台，请谨慎操作，确定要将其设置为管理员吗？', {
                 btn: ['确定', '取消'] //按钮
             }, function () {
-                setAsAdmin(userId);
+                setAsAdmin(userId, flag);
             }, function () {
 
             });
@@ -180,10 +181,10 @@ function resetPassword(userId) {
     });
 }
 
-//设置用户为管理员
-function setAsAdmin(userId) {
+//设置/取消用户为管理员
+function setAsAdmin(userId, flag) {
     $.ajax({
-        url: baseUrl + "/admin/setAsAdmin?userId=" + userId,
+        url: baseUrl + "/admin/setAsAdmin?userId=" + userId + "&flag=" + flag,
         method: "POST",
         //data: JSON.stringify(data),
         success: function (res, status) {
@@ -191,6 +192,7 @@ function setAsAdmin(userId) {
             if (status == "success") {
                 if (res.success) {
                     showOK();
+                    getUserList(app.search, app, false);
                 } else {
                     showAlertError(res.msg)
                 }
