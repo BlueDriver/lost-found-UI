@@ -9,7 +9,7 @@ var app = new Vue({
             pageNum: 0,
             pageSize: 10
         },
-        result:{
+        result: {
             totalPage: 0,
             total: 0,
             list: [
@@ -35,7 +35,7 @@ var app = new Vue({
             return this.search.pageNum + 1;
         }
     },
-    methods:{
+    methods: {
         toPage(pageNum) {
             console.log(pageNum);
             if (pageNum < 0 || pageNum > this.result.totalPage) {
@@ -49,7 +49,7 @@ var app = new Vue({
             this.search.pageNum = pgNum < 0 ? 0 : pgNum;
             getUserList(app.search, app, false);
         },
-        freezeUser(userId){
+        freezeUser(userId) {
             layer.confirm('冻结后该用户将无法再登录系统，确定要冻结码？', {
                 btn: ['确定', '取消'] //按钮
             }, function () {
@@ -58,7 +58,7 @@ var app = new Vue({
 
             });
         },
-        unfreezeUser(userId){
+        unfreezeUser(userId) {
             layer.confirm('解冻后用户可正常登录并发布信息，确定要解冻码？', {
                 btn: ['确定', '取消'] //按钮
             }, function () {
@@ -67,7 +67,7 @@ var app = new Vue({
 
             });
         },
-        setAsManager(userId){
+        setAsManager(userId) {
             layer.confirm('设置为管理员的账号可登录后台，请谨慎操作，确定要将其设置为管理员吗？', {
                 btn: ['确定', '取消'] //按钮
             }, function () {
@@ -86,11 +86,19 @@ var app = new Vue({
             }, function () {
 
             });
+        },
+        resetPassword(userId) {
+            //询问框
+            layer.confirm('确定码？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                resetPassword(userId);
+            }, function () {
+
+            });
         }
     }
 });
-
-
 
 
 $(function () {
@@ -114,7 +122,8 @@ $(function () {
     getUserList(app.search, app, false);
 });
 
-function getUserList(data, app, append){
+//获取用户列表
+function getUserList(data, app, append) {
     $.ajax({
         url: baseUrl + "/admin/userList",
         data: JSON.stringify(data),
@@ -145,8 +154,34 @@ function getUserList(data, app, append){
         }
     });
 }
+
+//重置密码
+function resetPassword(userId) {
+    $.ajax({
+        url: baseUrl + "/admin/resetPassword?userId=" + userId,
+        method: "POST",
+        //data: JSON.stringify(data),
+        beforeSend: function(){
+            showLoading();
+        },
+        success: function (res, status) {
+            console.log(res);
+            if (status == "success") {
+                if (res.success) {
+                    showOK();
+                } else {
+                    showAlertError(res.msg)
+                }
+            } else {
+                console.log(res);
+                alert(res)
+            }
+        }
+    });
+}
+
 //设置用户为管理员
-function setAsAdmin(userId){
+function setAsAdmin(userId) {
     $.ajax({
         url: baseUrl + "/admin/setAsAdmin?userId=" + userId,
         method: "POST",
@@ -166,8 +201,9 @@ function setAsAdmin(userId){
         }
     });
 }
+
 //冻结用户
-function freezeUser(userId){
+function freezeUser(userId) {
     $.ajax({
         url: baseUrl + "/admin/freezeUser?userId=" + userId,
         method: "POST",
@@ -190,7 +226,7 @@ function freezeUser(userId){
 }
 
 //解冻用户
-function unfreezeUser(userId){
+function unfreezeUser(userId) {
     $.ajax({
         url: baseUrl + "/admin/unfreezeUser?userId=" + userId,
         method: "POST",

@@ -242,6 +242,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                         <span class="glyphicon glyphicon-menu-hamburger"></span>
                                     </button>
                                     <ul class="dropdown-menu">
+                                        <li><a  @click="resetPassword(item.userId)">重置密码</a></li>
+                                        <li role="separator" class="divider"></li>
                                         <li><a  @click="freezeUser(item.userId)">冻结账号</a></li>
                                         <li role="separator" class="divider"></li>
                                         <li><a  @click="unfreezeUser(item.userId)">解冻账号</a></li>
