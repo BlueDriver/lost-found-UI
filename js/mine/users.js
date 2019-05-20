@@ -162,7 +162,7 @@ function resetPassword(userId) {
         url: baseUrl + "/admin/resetPassword?userId=" + userId,
         method: "POST",
         //data: JSON.stringify(data),
-        beforeSend: function(){
+        beforeSend: function () {
             showLoading();
         },
         success: function (res, status) {
@@ -210,6 +210,9 @@ function freezeUser(userId) {
         url: baseUrl + "/admin/freezeUser?userId=" + userId,
         method: "POST",
         //data: JSON.stringify(data),
+        beforeSend: function () {
+            showLoading();
+        },
         success: function (res, status) {
             console.log(res);
             if (status == "success") {
@@ -223,6 +226,9 @@ function freezeUser(userId) {
                 console.log(res);
                 alert(res)
             }
+        },
+        complete: function () {
+            hideLoading();
         }
     });
 }
@@ -233,6 +239,9 @@ function unfreezeUser(userId) {
         url: baseUrl + "/admin/unfreezeUser?userId=" + userId,
         method: "POST",
         //data: JSON.stringify(data),
+        beforeSend: function () {
+            showLoading();
+        },
         success: function (res, status) {
             console.log(res);
             if (status == "success") {
@@ -246,6 +255,9 @@ function unfreezeUser(userId) {
                 console.log(res);
                 alert(res)
             }
+        },
+        complete: function () {
+            hideLoading();
         }
     });
 }
